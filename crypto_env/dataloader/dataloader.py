@@ -2,12 +2,14 @@ from abc import ABC, abstractmethod
 
 
 class DataLoader(ABC):
-    features: list
+    _features: list
     _idx: int
 
     @abstractmethod
-    def __init__(self):
+    def __init__(self, start_idx, end_idx):
         super(DataLoader, self).__init__()
+        self._start_idx = start_idx,
+        self._end_idx = end_idx
 
     def __iter__(self):
         return self
@@ -22,6 +24,10 @@ class DataLoader(ABC):
 
     @abstractmethod
     def reset(self):
+        raise NotImplementedError()
+
+    @abstractmethod
+    def get_feature(self, feature_name):
         raise NotImplementedError()
 
     @property
