@@ -1,6 +1,7 @@
 import pandas as pd
 import numpy as np
-
+import plotly.graph_objects as go
+from plotly.subplots import make_subplots
 from crypto_env.types import Transaction
 
 
@@ -27,7 +28,9 @@ class Recorder:
             self._indexes = info.index
         self._info_record.append(list(info))
 
-    def get_transaction_record(self, idx):
+    def get_transaction_record(self, idx=None):
+        if idx is None:
+            idx = self._idx
         return pd.DataFrame(self._transaction_record).iloc[0:idx]
 
     def get_info_record(self, to_dataframe=True):
@@ -60,7 +63,7 @@ class Recorder:
     def get_fiat_balance(self, idx=None):
         if idx is None:
             idx = self._idx
-        return self.get_expenditure(idx) - self.get_income(idx)
+        return self.get_income(idx) - self.get_expenditure(idx)
 
     def get_crypto_balance(self, idx=None):
         if idx is None:
@@ -80,4 +83,6 @@ class Recorder:
     def get_roi(self, idx=None):
         if idx is None:
             idx = self._idx
-        raise NotImplementedError()
+        net_return = self.get_crypto_value(idx) + self.get_fiat_balance(idx)
+        cost = self.get_expenditure(idx)
+        return net_return / (cost + 0.0001)

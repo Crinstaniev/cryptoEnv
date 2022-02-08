@@ -30,6 +30,10 @@ class DataLoader(ABC):
     def get_feature(self, feature_name):
         raise NotImplementedError()
 
+    @abstractmethod
+    def get_duration(self):
+        raise NotImplementedError()
+
     @property
     def idx(self):
         return self._idx

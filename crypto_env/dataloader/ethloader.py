@@ -21,6 +21,7 @@ class ETHLoader(DataLoader):
         self._data.to_csv(os.path.join(self._dir, 'data.csv'))
         # var for the iterator
         self._idx = 0
+        self._duration = len(self._data)
 
     def __len__(self):
         return len(self._data)
@@ -36,6 +37,9 @@ class ETHLoader(DataLoader):
 
     def get_feature(self, feature_name):
         return self._data[feature_name]
+
+    def get_duration(self):
+        return self._duration
 
     def reset(self):
         self._idx = 0
