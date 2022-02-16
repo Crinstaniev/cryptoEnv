@@ -75,7 +75,7 @@ class CryptoEnv(gym.Env):
 
         return observation, reward, done, info
 
-    def sell(self, value, verbose=0):
+    def buy(self, value, verbose=0):
         fee_type = self.dataloader.get_transaction_fee_type()
         fee = self.dataloader.get_transaction_fee()
         if fee_type == 'fix':
@@ -84,20 +84,20 @@ class CryptoEnv(gym.Env):
             value = value * (1 - fee)
         action = dict(
             signal=0,
-            value=value
+            value=np.array([value], dtype=np.float64)
         )
         # sanity check
         if value < self._min_buy or value > self._max_buy:
             action = dict(
                 signal=2,
-                value=0
+                value=np.array([0], dtype=np.float64)
             )
             if verbose:
                 print("sell failed")
 
         self.step(action)
 
-    def buy(self, value, verbose=0):
+    def sell(self, value, verbose=0):
         fee_type = self.dataloader.get_transaction_fee_type()
         fee = self.dataloader.get_transaction_fee()
         if fee_type == 'fix':
@@ -106,13 +106,13 @@ class CryptoEnv(gym.Env):
             value = value * (1 - fee)
         action = dict(
             signal=1,
-            value=value
+            value=np.array([value], dtype=np.float64)
         )
         # sanity check
         if value < self._min_sell or value > self._max_sell:
             action = dict(
                 signal=2,
-                value=0
+                value=np.array([0], dtype=np.float64)
             )
             if verbose:
                 print("buy failed")
