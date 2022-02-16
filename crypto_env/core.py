@@ -9,21 +9,32 @@ from crypto_env.recorder import Recorder
 
 class CryptoEnv(gym.Env):
 
-    def __init__(self, transaction_low, transaction_high, dataloader: DataLoader, recorder: Recorder):
+    def __init__(self, max_sell, max_buy, min_sell, min_buy, dataloader: DataLoader,
+                 recorder: Recorder):
         # transaction fees are not implemented in this environment. should be implemented in the algorithm (agent)
         super(CryptoEnv, self).__init__()
 
         assert (isinstance(dataloader, DataLoader))
+
+        # check if transaction fee loaded
+        if dataloader.get_transaction_fee_type() is None:
+            raise Exception("Transaction fee not set.")
 
         self.dataloader = dataloader
         self._len_data = len(dataloader)
         self._len_features = len(dataloader._features)
         self.Info = create_info_type(dataloader._features)
         self.recorder = recorder
+        self._max_sell = max_sell
+        self._max_buy = max_buy
+        self._min_sell = min_sell
+        self._min_buy = min_buy
+        self._is_fix_transaction_fee = dataloader.get_transaction_fee_type() == 'fix'
 
         # define observation space: period market data. won't change due to action of the agent.
         self.observation_space = Dict({
-            'index': Box(low=0, high=self._len_data - 1, shape=(1,), dtype=np.int32),
+            'index': Box(low=0, high=self._len_data - 1, shape=(1,),
+                         dtype=np.int32),
             'features': Box(low=-np.inf,
                             high=np.inf,
                             shape=(len(self.dataloader._features),)),
@@ -33,7 +44,9 @@ class CryptoEnv(gym.Env):
         # signal: 0: buy, 1: sell, 2: hold.
         self.action_space = Dict({
             'signal': Discrete(3),
-            'value': Box(low=transaction_low, high=transaction_high, shape=(1,))
+            'value': Box(low=min(self._min_buy, self._min_sell),
+                         high=max(self._max_sell, self._max_buy),
+                         shape=(1,))
         })
 
     def step(self, action=None):
@@ -61,6 +74,58 @@ class CryptoEnv(gym.Env):
             done = True
 
         return observation, reward, done, info
+
+    def sell(self, value, verbose=0):
+        fee_type = self.dataloader.get_transaction_fee_type()
+        fee = self.dataloader.get_transaction_fee()
+        if fee_type == 'fix':
+            value -= value
+        else:
+            value = value * (1 - fee)
+        action = dict(
+            signal=0,
+            value=value
+        )
+        # sanity check
+        if value < self._min_buy or value > self._max_buy:
+            action = dict(
+                signal=2,
+                value=0
+            )
+            if verbose:
+                print("sell failed")
+
+        self.step(action)
+
+    def buy(self, value, verbose=0):
+        fee_type = self.dataloader.get_transaction_fee_type()
+        fee = self.dataloader.get_transaction_fee()
+        if fee_type == 'fix':
+            value -= fee
+        else:
+            value = value * (1 - fee)
+        action = dict(
+            signal=1,
+            value=value
+        )
+        # sanity check
+        if value < self._min_sell or value > self._max_sell:
+            action = dict(
+                signal=2,
+                value=0
+            )
+            if verbose:
+                print("buy failed")
+
+        self.step(action)
+
+    def hold(self, verbose=0):
+        # hold will always be successful.
+        action = dict(
+            signal=2,
+            value=0
+        )
+        self.step(action)
 
     def first_observation(self):
         self.reset()
