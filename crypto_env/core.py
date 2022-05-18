@@ -1,3 +1,4 @@
+from abc import ABC, abstractclassmethod
 from gym.spaces import Box, Dict, Discrete
 import gym
 import numpy as np
@@ -7,7 +8,7 @@ from crypto_env.dataloader.dataloader import DataLoader
 from crypto_env.recorder import Recorder
 
 
-class CryptoEnv(gym.Env):
+class CryptoEnv(gym.Env, ABC):
 
     def __init__(self, max_sell, max_buy, min_sell, min_buy, dataloader: DataLoader,
                  recorder: Recorder):
@@ -30,6 +31,9 @@ class CryptoEnv(gym.Env):
         self._min_sell = min_sell
         self._min_buy = min_buy
         self._is_fix_transaction_fee = dataloader.get_transaction_fee_type() == 'fix'
+        
+        # should be reset to False for each iteration
+        self._is_done = False
 
         # define observation space: period market data. won't change due to action of the agent.
         self.observation_space = Dict({
@@ -66,14 +70,18 @@ class CryptoEnv(gym.Env):
 
         self.recorder.insert_transaction(transaction=transaction)
         self.recorder.insert_info(info=info)
-
-        reward = 0.0  # reward is not implemented yet.
+        
         info = dict()
-        done = False
         if idx + 1 == len(self.dataloader):
-            done = True
+            self._is_done = True
+            
+        reward = self.get_reward()
 
-        return observation, reward, done, info
+        return observation, reward, self._is_done, info
+    
+    @abstractclassmethod
+    def get_reward(self):
+        return 0.0
 
     def buy(self, value, verbose=0):
         fee_type = self.dataloader.get_transaction_fee_type()
@@ -84,18 +92,18 @@ class CryptoEnv(gym.Env):
             value = value * (1 - fee)
         action = dict(
             signal=0,
-            value=np.array([value], dtype=np.float64)
+            value=np.array([value], dtype=np.float32)
         )
         # sanity check
         if value < self._min_buy or value > self._max_buy:
             action = dict(
                 signal=2,
-                value=np.array([0], dtype=np.float64)
+                value=np.array([0], dtype=np.float32)
             )
             if verbose:
                 print("sell failed")
 
-        self.step(action)
+        return self.step(action)
 
     def sell(self, value, verbose=0):
         fee_type = self.dataloader.get_transaction_fee_type()
@@ -106,26 +114,26 @@ class CryptoEnv(gym.Env):
             value = value * (1 - fee)
         action = dict(
             signal=1,
-            value=np.array([value], dtype=np.float64)
+            value=np.array([value], dtype=np.float32)
         )
         # sanity check
         if value < self._min_sell or value > self._max_sell:
             action = dict(
                 signal=2,
-                value=np.array([0], dtype=np.float64)
+                value=np.array([0], dtype=np.float32)
             )
             if verbose:
                 print("buy failed")
 
-        self.step(action)
+        return self.step(action)
 
     def hold(self, verbose=0):
         # hold will always be successful.
         action = dict(
             signal=2,
-            value=0
+            value=np.array([0], dtype=np.float32)
         )
-        self.step(action)
+        return self.step(action)
 
     def first_observation(self):
         self.reset()
@@ -139,6 +147,7 @@ class CryptoEnv(gym.Env):
     def reset(self):
         self.dataloader.reset()
         self.recorder.reset()
+        self._is_done = False
         return self
 
     def render(self, mode="human"):

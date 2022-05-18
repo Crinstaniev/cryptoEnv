@@ -6,7 +6,7 @@ from crypto_env.types import Transaction
 
 
 class Recorder:
-    def __init__(self, price_list) -> None:
+    def __init__(self, price_list, crypto_cap=0, fiat_cap=1000) -> None:
         self._transaction_record = list()
         self._info_record = list()
         self._idx = -1

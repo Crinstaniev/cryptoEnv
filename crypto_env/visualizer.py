@@ -11,7 +11,7 @@ class Visualizer:
     下个版本修复这两个问题
     """
 
-    def __init__(self, env, time_feature_name):
+    def __init__(self, env, time_feature_name='time'):
         self._env = env
         self._time = time_feature_name
 
@@ -25,7 +25,7 @@ class Visualizer:
             go.Scatter(
                 dict(mode='lines',
                      name='Price in USD',
-                     x=self._env.dataloader.get_feature(self._time),
+                     x=self._env.dataloader.get_idx(),
                      y=self._env.dataloader.get_feature('PriceUSD'),
                      line_color='black',
                      line_width=1)
@@ -35,7 +35,7 @@ class Visualizer:
             go.Scatter(
                 dict(name='buy',
                      mode='markers',
-                     x=self._env.dataloader.get_feature(self._time).iloc[buy_signal_index],
+                     x=self._env.dataloader.get_idx().iloc[buy_signal_index],
                      y=self._env.dataloader.get_feature('PriceUSD').iloc[buy_signal_index],
                      marker_symbol=119,
                      marker_line_color='green',
@@ -47,7 +47,7 @@ class Visualizer:
             go.Scatter(
                 dict(name='sell',
                      mode='markers',
-                     x=self._env.dataloader.get_feature(self._time).iloc[sell_signal_index],
+                     x=self._env.dataloader.get_idx().iloc[sell_signal_index],
                      y=self._env.dataloader.get_feature('PriceUSD').iloc[sell_signal_index],
                      marker_symbol=120,
                      marker_line_color='red',
@@ -56,7 +56,7 @@ class Visualizer:
             )
         )
         fig.update_yaxes(title_text="Price in USD")
-        fig.update_xaxes(title_text="Time")
+        fig.update_xaxes(title_text="Day")
         fig.update_layout(template="plotly_white")
         fig.update_layout(title_text='Buy and Sell Signals')
         return fig
@@ -84,7 +84,7 @@ class Visualizer:
             go.Scatter(
                 dict(mode='lines',
                      name='Fiat Balance',
-                     x=self._env.dataloader.get_feature(self._time),
+                     x=self._env.dataloader.get_idx(),
                      y=fiat_balance_history,
                      line_color='red',
                      line_width=1)
@@ -94,7 +94,7 @@ class Visualizer:
             go.Scatter(
                 dict(mode='lines',
                      name='Crypto Holding Value (USD)',
-                     x=self._env.dataloader.get_feature(self._time),
+                     x=self._env.dataloader.get_idx(),
                      y=crypto_holding_usd_history,
                      line_color='green',
                      line_width=1)
@@ -104,14 +104,14 @@ class Visualizer:
             go.Scatter(
                 dict(mode='lines',
                      name='Total (USD)',
-                     x=self._env.dataloader.get_feature(self._time),
+                     x=self._env.dataloader.get_idx(),
                      y=total_history,
                      line_color='blue',
                      line_width=1)
             )
         )
         fig.update_yaxes(title_text="USD")
-        fig.update_xaxes(title_text='Date')
+        fig.update_xaxes(title_text='Day')
         fig.update_layout(title_text='Portfolio Time Series')
         fig.update_layout(template="plotly_white")
         return fig
@@ -130,7 +130,7 @@ class Visualizer:
                 dict(
                     mode='lines',
                     name='Gross ROI',
-                    x=self._env.dataloader.get_feature(self._time),
+                    x=self._env.dataloader.get_idx(),
                     y=roi_history,
                     line_color='blue',
                     line_width=1
@@ -140,7 +140,7 @@ class Visualizer:
 
         fig.update_yaxes(title_text="Percent", secondary_y=False)
         fig.update_yaxes(title_text="Ratio", secondary_y=True)
-        fig.update_xaxes(title_text="Date")
+        fig.update_xaxes(title_text="Day")
         fig.update_layout(title_text="Gross ROI and Annualized Sharpe Ratio")
         fig.update_layout(template="plotly_white")
         return fig

@@ -52,6 +52,9 @@ class DataLoader(ABC):
     @abstractmethod
     def reset(self):
         raise NotImplementedError()
+    
+    def get_idx(self):
+        raise NotImplementedError()
 
     @abstractmethod
     def get_feature(self, feature_name):
