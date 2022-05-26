@@ -6,3 +6,4 @@ crenv.egg-info/
 build/
 .ipynb_checkpoints/
 .idea/
+venv/
