@@ -9,9 +9,23 @@ from crypto_env.recorder import Recorder
 
 
 class CryptoEnv(gym.Env, ABC):
+    """
+    This is the core module of `CrytoEnv`. It provide environment for agents to perform buy and sell actions and provide market states.
+    """
 
     def __init__(self, max_sell, max_buy, min_sell, min_buy, dataloader: DataLoader,
                  recorder: Recorder):
+        """__init__
+
+        Args:
+            max_sell (float): maximum crypto to sell
+            max_buy (float): maximum crypto to buy
+            min_sell (float): minimum crypto to sell
+            min_buy (float): minimum crypto to buy
+            dataloader (:py:class:`DataLoader`): the :py:class:`crypto_env.dataloader.dataloader.DataLoader` instance
+            recorder (:py:class:`Recorder`): the :py:class:`Recorder` instance
+        """        
+        
         # transaction fees are not implemented in this environment. should be implemented in the algorithm (agent)
         super(CryptoEnv, self).__init__()
 
@@ -54,6 +68,18 @@ class CryptoEnv(gym.Env, ABC):
         })
 
     def step(self, action=None):
+        """step
+
+        Args:
+            action (dict, optional): action to take. Defaults to None.
+
+        Returns:
+            agent's observation after taking the action (numpy array),
+            reward of the action (float),
+            whether the episode is to the end (bool), and
+            diagnostic information for debugging (any).
+        """        
+        
         # the history data will be returned as info from the recorder.
         signal = action['signal']
         value = action['value']
@@ -81,9 +107,25 @@ class CryptoEnv(gym.Env, ABC):
     
     @abstractclassmethod
     def get_reward(self):
+        """get_reward
+
+        Returns:
+            float: the reward for agent after taking an action
+        """        
         return 0.0
 
     def buy(self, value, verbose=0):
+        """buy
+        
+        The agent buy some amount of crypto.
+
+        Args:
+            value (float): number of crypto to buy
+            verbose (int, optional): whether to print out debug info. Defaults to 0.
+
+        Returns:
+            same return as :py:func:`step`
+        """        
         fee_type = self.dataloader.get_transaction_fee_type()
         fee = self.dataloader.get_transaction_fee()
         if fee_type == 'fix':
@@ -106,6 +148,17 @@ class CryptoEnv(gym.Env, ABC):
         return self.step(action)
 
     def sell(self, value, verbose=0):
+        """sell
+        
+        The agent sell some amount of crypto.
+
+        Args:
+            value (float): number of crypto to sell
+            verbose (int, optional): whether to print out debug info. Defaults to 0.
+
+        Returns:
+            same return as :py:func:`step`
+        """        
         fee_type = self.dataloader.get_transaction_fee_type()
         fee = self.dataloader.get_transaction_fee()
         if fee_type == 'fix':
@@ -128,6 +181,16 @@ class CryptoEnv(gym.Env, ABC):
         return self.step(action)
 
     def hold(self, verbose=0):
+        """hold
+        
+        The agent does not want to do anything in this step
+
+        Args:
+            verbose (int, optional): whether to print out debug info. Defaults to 0.
+
+        Returns:
+            same return as :py:func:`step`
+        """        
         # hold will always be successful.
         action = dict(
             signal=2,
@@ -136,6 +199,12 @@ class CryptoEnv(gym.Env, ABC):
         return self.step(action)
 
     def first_observation(self):
+        """Return the first observation
+
+        Returns:
+            dict: return a dictionary structured dict(features, index)
+                    
+        """        
         self.reset()
         idx, info = next(self.dataloader)
         observation = dict(
@@ -145,15 +214,31 @@ class CryptoEnv(gym.Env, ABC):
         return observation
 
     def reset(self):
+        """Reset the environment to prepare for a new episode
+
+        Returns:
+            :py:class:`CryptoEnv`: 
+            
+        """        
         self.dataloader.reset()
         self.recorder.reset()
         self._is_done = False
         return self
 
     def render(self, mode="human"):
+        """Placeholder. Not implemented yet.
+
+        Args:
+            mode (str, optional): Defaults to "human".
+        """        
         pass
 
     def meta(self):
+        """Return the meta information of the environment
+
+        Returns:
+            dict: the meta of the env
+        """        
         # return meta information
         return dict(
             signals=dict(

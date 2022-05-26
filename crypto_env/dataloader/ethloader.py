@@ -4,11 +4,24 @@ import numpy as np
 
 from .dataloader import DataLoader
 
-
 class ETHLoader(DataLoader):
+    """
+    Our example implementation of :py:class:`DataLoader` class. We use the Ethereum history data from the coinmetrics repo. See https://raw.githubusercontent.com/coinmetrics/data for more details.
+    """
 
     def __init__(self, base_dir, start_idx, end_idx, features: list, dropna=False, download=True,
                  url="https://raw.githubusercontent.com/coinmetrics/data/master/csv/eth.csv"):
+        """__init__
+
+        Args:
+            base_dir (str): Directory to save the download data
+            start_idx (int): Where to start in the data source
+            end_idx (int): Where to end in the data source
+            features (list): Input variables for the environment
+            dropna (bool, optional): Whether to drop lines including empty values. Defaults to False.
+            download (bool, optional): Whether to re-download the data. Defaults to True.
+            url (str, optional): Link to the data source. Defaults to "https://raw.githubusercontent.com/coinmetrics/data/master/csv/eth.csv".
+        """        
         self._dir = os.path.join(base_dir, 'eth_data')
         self._features = features
         addr = None
@@ -32,6 +45,11 @@ class ETHLoader(DataLoader):
         self._duration = len(self._data)
 
     def __len__(self):
+        """Number of items
+
+        Returns:
+            int
+        """        
         return len(self._data)
 
     def __next__(self):

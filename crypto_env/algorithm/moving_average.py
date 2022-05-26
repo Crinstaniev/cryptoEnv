@@ -4,6 +4,8 @@ from collections import deque
 
 
 class MovingAverage(Algorithm):
+    """An example implementation of class :py:class:`Algorithm`. This algorithm implements the Dual Moving Average Crossover strategy. See https://faculty.fuqua.duke.edu/~charvey/Teaching/BA453_2002/CCAM/CCAM.htm for more information.
+    """
     def __init__(self, price_feature_pos, short_window=30, long_window=180,
                  initial_cap=100):
         # simplified version of moving average. buy all cap / sell all cap at once.

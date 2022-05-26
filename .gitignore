@@ -1,1 +1,8 @@
 .pypirc
+crypto_env.egg-info/
+cryptoenv.egg-info/
+dist/
+crenv.egg-info/
+build/
+.ipynb_checkpoints/
+.idea/

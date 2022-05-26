@@ -3,6 +3,8 @@ from . import Algorithm
 
 
 class BuyAndHold(Algorithm):
+    """An example implementation of class :py:class:`Algorithm`. This algorithm implements the buy and hold strategy. See https://www.investopedia.com/terms/b/buyandhold.asp for more information.
+    """
     def __init__(self, buy_amount: float):
         """
         :param buy_amount: unit in cryptocurrency
