@@ -1,0 +1,132 @@
+\begin{sphinxtheindex}
+\let\bigletter\sphinxstyleindexlettergroup
+\let\spxpagem \sphinxstyleindexpagemain
+\let\spxentry \sphinxstyleindexentry
+\let\spxextra \sphinxstyleindexextra
+
+  \bigletter {\sphinxsymbolsname}
+  \item \spxentry{\_\_init\_\_()}\spxextra{crypto\_env.algorithm.BuyAndHold method}, \hyperpage{11}
+  \item \spxentry{\_\_init\_\_()}\spxextra{crypto\_env.core.CryptoEnv method}, \hyperpage{5}
+  \item \spxentry{\_\_init\_\_()}\spxextra{crypto\_env.dataloader.DataLoader method}, \hyperpage{6}
+  \item \spxentry{\_\_init\_\_()}\spxextra{crypto\_env.dataloader.ETHLoader method}, \hyperpage{7}
+  \item \spxentry{\_\_init\_\_()}\spxextra{crypto\_env.recorder.Recorder method}, \hyperpage{8}
+  \item \spxentry{\_\_init\_\_()}\spxextra{crypto\_env.visualizer.Visualizer method}, 
+		\hyperpage{10}
+  \item \spxentry{\_\_iter\_\_()}\spxextra{crypto\_env.dataloader.DataLoader method}, \hyperpage{7}
+  \item \spxentry{\_\_len\_\_()}\spxextra{crypto\_env.dataloader.DataLoader method}, \hyperpage{7}
+  \item \spxentry{\_\_len\_\_()}\spxextra{crypto\_env.dataloader.ETHLoader method}, \hyperpage{8}
+  \item \spxentry{\_\_next\_\_()}\spxextra{crypto\_env.dataloader.DataLoader method}, \hyperpage{7}
+
+  \indexspace
+  \bigletter A
+  \item \spxentry{Algorithm}\spxextra{class in crypto\_env.algorithm}, \hyperpage{10}
+
+  \indexspace
+  \bigletter B
+  \item \spxentry{buy()}\spxextra{crypto\_env.core.CryptoEnv method}, \hyperpage{5}
+  \item \spxentry{BuyAndHold}\spxextra{class in crypto\_env.algorithm}, \hyperpage{11}
+
+  \indexspace
+  \bigletter C
+  \item \spxentry{crypto\_env.algorithm}
+    \subitem \spxentry{module}, \hyperpage{10}
+  \item \spxentry{crypto\_env.dataloader}
+    \subitem \spxentry{module}, \hyperpage{6}
+  \item \spxentry{CryptoEnv}\spxextra{class in crypto\_env.core}, \hyperpage{5}
+
+  \indexspace
+  \bigletter D
+  \item \spxentry{DataLoader}\spxextra{class in crypto\_env.dataloader}, \hyperpage{6}
+  \item \spxentry{draw\_portfolio()}\spxextra{crypto\_env.visualizer.Visualizer method}, 
+		\hyperpage{10}
+  \item \spxentry{draw\_return()}\spxextra{crypto\_env.visualizer.Visualizer method}, 
+		\hyperpage{10}
+  \item \spxentry{draw\_signal()}\spxextra{crypto\_env.visualizer.Visualizer method}, 
+		\hyperpage{10}
+
+  \indexspace
+  \bigletter E
+  \item \spxentry{ETHLoader}\spxextra{class in crypto\_env.dataloader}, \hyperpage{7}
+
+  \indexspace
+  \bigletter F
+  \item \spxentry{first\_observation()}\spxextra{crypto\_env.core.CryptoEnv method}, \hyperpage{5}
+
+  \indexspace
+  \bigletter G
+  \item \spxentry{get\_crypto\_balance()}\spxextra{crypto\_env.recorder.Recorder method}, 
+		\hyperpage{9}
+  \item \spxentry{get\_crypto\_value()}\spxextra{crypto\_env.recorder.Recorder method}, 
+		\hyperpage{9}
+  \item \spxentry{get\_duration()}\spxextra{crypto\_env.dataloader.DataLoader method}, 
+		\hyperpage{7}
+  \item \spxentry{get\_duration()}\spxextra{crypto\_env.dataloader.ETHLoader method}, \hyperpage{8}
+  \item \spxentry{get\_expenditure()}\spxextra{crypto\_env.recorder.Recorder method}, \hyperpage{9}
+  \item \spxentry{get\_feature()}\spxextra{crypto\_env.dataloader.DataLoader method}, \hyperpage{7}
+  \item \spxentry{get\_feature()}\spxextra{crypto\_env.dataloader.ETHLoader method}, \hyperpage{8}
+  \item \spxentry{get\_fiat\_balance()}\spxextra{crypto\_env.recorder.Recorder method}, 
+		\hyperpage{9}
+  \item \spxentry{get\_idx()}\spxextra{crypto\_env.dataloader.DataLoader method}, \hyperpage{7}
+  \item \spxentry{get\_idx()}\spxextra{crypto\_env.dataloader.ETHLoader method}, \hyperpage{8}
+  \item \spxentry{get\_income()}\spxextra{crypto\_env.recorder.Recorder method}, \hyperpage{9}
+  \item \spxentry{get\_info\_record()}\spxextra{crypto\_env.recorder.Recorder method}, 
+		\hyperpage{9}
+  \item \spxentry{get\_reward()}\spxextra{crypto\_env.core.CryptoEnv class method}, \hyperpage{5}
+  \item \spxentry{get\_roi()}\spxextra{crypto\_env.recorder.Recorder method}, \hyperpage{9}
+  \item \spxentry{get\_transaction\_fee()}\spxextra{crypto\_env.dataloader.DataLoader method}, 
+		\hyperpage{7}
+  \item \spxentry{get\_transaction\_fee\_type()}\spxextra{crypto\_env.dataloader.DataLoader method}, 
+		\hyperpage{7}
+  \item \spxentry{get\_transaction\_record()}\spxextra{crypto\_env.recorder.Recorder method}, 
+		\hyperpage{9}
+
+  \indexspace
+  \bigletter H
+  \item \spxentry{hold()}\spxextra{crypto\_env.core.CryptoEnv method}, \hyperpage{6}
+
+  \indexspace
+  \bigletter I
+  \item \spxentry{idx}\spxextra{crypto\_env.dataloader.DataLoader property}, \hyperpage{7}
+  \item \spxentry{insert\_info()}\spxextra{crypto\_env.recorder.Recorder method}, \hyperpage{9}
+  \item \spxentry{insert\_transaction()}\spxextra{crypto\_env.recorder.Recorder method}, 
+		\hyperpage{10}
+
+  \indexspace
+  \bigletter L
+  \item \spxentry{load\_transaction\_fee()}\spxextra{crypto\_env.dataloader.DataLoader method}, 
+		\hyperpage{7}
+
+  \indexspace
+  \bigletter M
+  \item \spxentry{meta()}\spxextra{crypto\_env.core.CryptoEnv method}, \hyperpage{6}
+  \item \spxentry{module}
+    \subitem \spxentry{crypto\_env.algorithm}, \hyperpage{10}
+    \subitem \spxentry{crypto\_env.dataloader}, \hyperpage{6}
+  \item \spxentry{MovingAverage}\spxextra{class in crypto\_env.algorithm}, \hyperpage{11}
+
+  \indexspace
+  \bigletter R
+  \item \spxentry{Recorder}\spxextra{class in crypto\_env.recorder}, \hyperpage{8}
+  \item \spxentry{render()}\spxextra{crypto\_env.core.CryptoEnv method}, \hyperpage{6}
+  \item \spxentry{reset()}\spxextra{crypto\_env.core.CryptoEnv method}, \hyperpage{6}
+  \item \spxentry{reset()}\spxextra{crypto\_env.dataloader.DataLoader method}, \hyperpage{7}
+  \item \spxentry{reset()}\spxextra{crypto\_env.dataloader.ETHLoader method}, \hyperpage{8}
+  \item \spxentry{reset()}\spxextra{crypto\_env.recorder.Recorder method}, \hyperpage{10}
+
+  \indexspace
+  \bigletter S
+  \item \spxentry{sell()}\spxextra{crypto\_env.core.CryptoEnv method}, \hyperpage{6}
+  \item \spxentry{step()}\spxextra{crypto\_env.core.CryptoEnv method}, \hyperpage{6}
+
+  \indexspace
+  \bigletter T
+  \item \spxentry{take\_action()}\spxextra{crypto\_env.algorithm.Algorithm method}, \hyperpage{10}
+  \item \spxentry{take\_action()}\spxextra{crypto\_env.algorithm.BuyAndHold method}, \hyperpage{11}
+  \item \spxentry{take\_action()}\spxextra{crypto\_env.algorithm.MovingAverage method}, 
+		\hyperpage{11}
+
+  \indexspace
+  \bigletter V
+  \item \spxentry{Visualizer}\spxextra{class in crypto\_env.visualizer}, \hyperpage{10}
+
+\end{sphinxtheindex}

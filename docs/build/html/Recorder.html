@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Recorder &mdash; CryptoEnv 0.1.1 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Visualizer" href="Visualizer.html" />
+    <link rel="prev" title="DataLoader" href="DataLoader.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> CryptoEnv
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html#install-using-pip">Install Using <cite>pip</cite></a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="api.html">API</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="CryptoEnv.html">CryptoEnv</a></li>
+<li class="toctree-l2"><a class="reference internal" href="DataLoader.html">DataLoader</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Recorder</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Visualizer.html">Visualizer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Algorithm.html">Algorithm</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">CryptoEnv</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="api.html">API</a> &raquo;</li>
+      <li>Recorder</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/Recorder.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="recorder">
+<h1>Recorder<a class="headerlink" href="#recorder" title="Permalink to this headline"></a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="crypto_env.recorder.Recorder">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">crypto_env.recorder.</span></span><span class="sig-name descname"><span class="pre">Recorder</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">price_list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">crypto_cap</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fiat_cap</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1000</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/crypto_env/recorder.html#Recorder"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#crypto_env.recorder.Recorder" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>This is the recorder class. A recorder object is able to record agent’s action in both training and production mod. The data collected can later be used for plotting or analyzing.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="crypto_env.recorder.Recorder.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">price_list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">crypto_cap</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fiat_cap</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1000</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/crypto_env/recorder.html#Recorder.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#crypto_env.recorder.Recorder.__init__" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>price_list</strong> (<em>list</em>) – a list of price, the length should be equal to the size of the <code class="xref py py-class docutils literal notranslate"><span class="pre">DataLoader</span></code>.</p></li>
+<li><p><strong>crypto_cap</strong> (<em>int</em><em>, </em><em>optional</em>) – initial balance of crypto. Defaults to 0.</p></li>
+<li><p><strong>fiat_cap</strong> (<em>int</em><em>, </em><em>optional</em>) – initial balance of fiat. Defaults to 1000.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="crypto_env.recorder.Recorder.get_crypto_balance">
+<span class="sig-name descname"><span class="pre">get_crypto_balance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">idx</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/crypto_env/recorder.html#Recorder.get_crypto_balance"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#crypto_env.recorder.Recorder.get_crypto_balance" title="Permalink to this definition"></a></dt>
+<dd><p>Calculate cryptocurrency balance</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>idx</strong> (<em>int</em><em>, </em><em>optional</em>) – How many transactions to involve. Defaults to None.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>_description_</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>_type_</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="crypto_env.recorder.Recorder.get_crypto_value">
+<span class="sig-name descname"><span class="pre">get_crypto_value</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">idx</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/crypto_env/recorder.html#Recorder.get_crypto_value"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#crypto_env.recorder.Recorder.get_crypto_value" title="Permalink to this definition"></a></dt>
+<dd><p>Calculate the value of crypto in balance</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>idx</strong> (<em>int</em><em>, </em><em>optional</em>) – How many transactions to involve. Defaults to None.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="crypto_env.recorder.Recorder.get_expenditure">
+<span class="sig-name descname"><span class="pre">get_expenditure</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">idx</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/crypto_env/recorder.html#Recorder.get_expenditure"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#crypto_env.recorder.Recorder.get_expenditure" title="Permalink to this definition"></a></dt>
+<dd><p>Calculate how many fiat was used in the investment.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>idx</strong> (<em>int</em><em>, </em><em>optional</em>) – Number of transactions to involve. Defaults to None.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="crypto_env.recorder.Recorder.get_fiat_balance">
+<span class="sig-name descname"><span class="pre">get_fiat_balance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">idx</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/crypto_env/recorder.html#Recorder.get_fiat_balance"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#crypto_env.recorder.Recorder.get_fiat_balance" title="Permalink to this definition"></a></dt>
+<dd><p>Calculate fiat balance</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>idx</strong> (<em>int</em><em>, </em><em>optional</em>) – How many transactions to involve. Defaults to None.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="crypto_env.recorder.Recorder.get_income">
+<span class="sig-name descname"><span class="pre">get_income</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">idx</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/crypto_env/recorder.html#Recorder.get_income"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#crypto_env.recorder.Recorder.get_income" title="Permalink to this definition"></a></dt>
+<dd><p>Calculate how many value does the agent earn.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>idx</strong> (<em>int</em><em>, </em><em>optional</em>) – How many transactions to involve. Defaults to None.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="crypto_env.recorder.Recorder.get_info_record">
+<span class="sig-name descname"><span class="pre">get_info_record</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">to_dataframe</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/crypto_env/recorder.html#Recorder.get_info_record"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#crypto_env.recorder.Recorder.get_info_record" title="Permalink to this definition"></a></dt>
+<dd><p>Return all history market info</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>to_dataframe</strong> (<em>bool</em><em>, </em><em>optional</em>) – Whether to convert to dataframe. Defaults to True.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Market information history</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>(DataFrame, any)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="crypto_env.recorder.Recorder.get_roi">
+<span class="sig-name descname"><span class="pre">get_roi</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">idx</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/crypto_env/recorder.html#Recorder.get_roi"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#crypto_env.recorder.Recorder.get_roi" title="Permalink to this definition"></a></dt>
+<dd><p>Calculate the return of investment</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>idx</strong> (<em>int</em><em>, </em><em>optional</em>) – How many transactions to involve. Defaults to None.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="crypto_env.recorder.Recorder.get_transaction_record">
+<span class="sig-name descname"><span class="pre">get_transaction_record</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">idx</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/crypto_env/recorder.html#Recorder.get_transaction_record"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#crypto_env.recorder.Recorder.get_transaction_record" title="Permalink to this definition"></a></dt>
+<dd><p>Return all history buy and sell signals generated by the agent</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>idx</strong> (<em>int</em><em>, </em><em>optional</em>) – Number of records to print. Defaults to None.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A <code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code> containing all history signals.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="crypto_env.recorder.Recorder.insert_info">
+<span class="sig-name descname"><span class="pre">insert_info</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">info</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/crypto_env/recorder.html#Recorder.insert_info"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#crypto_env.recorder.Recorder.insert_info" title="Permalink to this definition"></a></dt>
+<dd><p>Insert market information into the record</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>info</strong> (<em>array-like</em>) – an array of current market info</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="crypto_env.recorder.Recorder.insert_transaction">
+<span class="sig-name descname"><span class="pre">insert_transaction</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">transaction</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">crypto_env.types.Transaction</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/crypto_env/recorder.html#Recorder.insert_transaction"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#crypto_env.recorder.Recorder.insert_transaction" title="Permalink to this definition"></a></dt>
+<dd><p>Insert new transaction into the recorder</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>transaction</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Transaction</span></code>) – <code class="xref py py-class docutils literal notranslate"><span class="pre">Transaction</span></code> object to insert</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="crypto_env.recorder.Recorder.reset">
+<span class="sig-name descname"><span class="pre">reset</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/crypto_env/recorder.html#Recorder.reset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#crypto_env.recorder.Recorder.reset" title="Permalink to this definition"></a></dt>
+<dd><p>Reset the recorder</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="DataLoader.html" class="btn btn-neutral float-left" title="DataLoader" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="Visualizer.html" class="btn btn-neutral float-right" title="Visualizer" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Crinstaniev.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

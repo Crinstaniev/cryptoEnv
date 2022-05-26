@@ -3,7 +3,7 @@ crypto_env.egg-info/
 cryptoenv.egg-info/
 dist/
 crenv.egg-info/
-build/
+./build/
 .ipynb_checkpoints/
 .idea/
 venv/

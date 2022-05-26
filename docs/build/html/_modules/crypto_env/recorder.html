@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>crypto_env.recorder &mdash; CryptoEnv 0.1.1 documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> CryptoEnv
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html#install-using-pip">Install Using <cite>pip</cite></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api.html">API</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">CryptoEnv</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+      <li>crypto_env.recorder</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for crypto_env.recorder</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">plotly.graph_objects</span> <span class="k">as</span> <span class="nn">go</span>
+<span class="kn">from</span> <span class="nn">plotly.subplots</span> <span class="kn">import</span> <span class="n">make_subplots</span>
+<span class="kn">from</span> <span class="nn">crypto_env.types</span> <span class="kn">import</span> <span class="n">Transaction</span>
+
+
+<div class="viewcode-block" id="Recorder"><a class="viewcode-back" href="../../Recorder.html#crypto_env.recorder.Recorder">[docs]</a><span class="k">class</span> <span class="nc">Recorder</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This is the recorder class. A recorder object is able to record agent&#39;s action in both training and production mod. The data collected can later be used for plotting or analyzing.</span>
+<span class="sd">    &quot;&quot;&quot;</span>    
+<div class="viewcode-block" id="Recorder.__init__"><a class="viewcode-back" href="../../Recorder.html#crypto_env.recorder.Recorder.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">price_list</span><span class="p">,</span> <span class="n">crypto_cap</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">fiat_cap</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;__init__</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            price_list (list): a list of price, the length should be equal to the size of the :py:class:`DataLoader`.</span>
+<span class="sd">            crypto_cap (int, optional): initial balance of crypto. Defaults to 0.</span>
+<span class="sd">            fiat_cap (int, optional): initial balance of fiat. Defaults to 1000.</span>
+<span class="sd">        &quot;&quot;&quot;</span>        
+        <span class="bp">self</span><span class="o">.</span><span class="n">_transaction_record</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_info_record</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_idx</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_indexes</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_price_list</span> <span class="o">=</span> <span class="n">price_list</span></div>
+
+<div class="viewcode-block" id="Recorder.reset"><a class="viewcode-back" href="../../Recorder.html#crypto_env.recorder.Recorder.reset">[docs]</a>    <span class="k">def</span> <span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Reset the recorder</span>
+<span class="sd">        &quot;&quot;&quot;</span>        
+        <span class="bp">self</span><span class="o">.</span><span class="n">_transaction_record</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_info_record</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_idx</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_indexes</span> <span class="o">=</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="Recorder.insert_transaction"><a class="viewcode-back" href="../../Recorder.html#crypto_env.recorder.Recorder.insert_transaction">[docs]</a>    <span class="k">def</span> <span class="nf">insert_transaction</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">transaction</span><span class="p">:</span> <span class="n">Transaction</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Insert new transaction into the recorder</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            transaction (:py:class:`.Transaction`): :py:class:`.Transaction` object to insert</span>
+<span class="sd">        &quot;&quot;&quot;</span>        
+        <span class="bp">self</span><span class="o">.</span><span class="n">_transaction_record</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">transaction</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_idx</span> <span class="o">+=</span> <span class="mi">1</span></div>
+
+<div class="viewcode-block" id="Recorder.insert_info"><a class="viewcode-back" href="../../Recorder.html#crypto_env.recorder.Recorder.insert_info">[docs]</a>    <span class="k">def</span> <span class="nf">insert_info</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">info</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Insert market information into the record</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            info (array-like): an array of current market info</span>
+<span class="sd">        &quot;&quot;&quot;</span>        
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_indexes</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_indexes</span> <span class="o">=</span> <span class="n">info</span><span class="o">.</span><span class="n">index</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_info_record</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">info</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="Recorder.get_transaction_record"><a class="viewcode-back" href="../../Recorder.html#crypto_env.recorder.Recorder.get_transaction_record">[docs]</a>    <span class="k">def</span> <span class="nf">get_transaction_record</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">idx</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return all history buy and sell signals generated by the agent</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            idx (int, optional): Number of records to print. Defaults to None.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            DataFrame: A :py:class:`pandas.DataFrame` containing all history signals.</span>
+<span class="sd">        &quot;&quot;&quot;</span>        
+        <span class="k">if</span> <span class="n">idx</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">idx</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_idx</span>
+        <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_transaction_record</span><span class="p">)</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">idx</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="Recorder.get_info_record"><a class="viewcode-back" href="../../Recorder.html#crypto_env.recorder.Recorder.get_info_record">[docs]</a>    <span class="k">def</span> <span class="nf">get_info_record</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">to_dataframe</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return all history market info</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            to_dataframe (bool, optional): Whether to convert to dataframe. Defaults to True.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            (DataFrame, any): Market information history</span>
+<span class="sd">        &quot;&quot;&quot;</span>        
+        <span class="k">if</span> <span class="n">to_dataframe</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_info_record</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_indexes</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_info_record</span></div>
+
+<div class="viewcode-block" id="Recorder.get_expenditure"><a class="viewcode-back" href="../../Recorder.html#crypto_env.recorder.Recorder.get_expenditure">[docs]</a>    <span class="k">def</span> <span class="nf">get_expenditure</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">idx</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Calculate how many fiat was used in the investment.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            idx (int, optional): Number of transactions to involve. Defaults to None.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            float</span>
+<span class="sd">        &quot;&quot;&quot;</span>        
+        <span class="k">if</span> <span class="n">idx</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">idx</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_idx</span>
+        <span class="n">transaction_record</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_transaction_record</span><span class="p">(</span><span class="n">idx</span><span class="p">)</span>
+        <span class="n">buy_record</span> <span class="o">=</span> <span class="n">transaction_record</span><span class="p">[</span><span class="n">transaction_record</span><span class="p">[</span><span class="s1">&#39;signal&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">]</span>
+        <span class="n">buy_index</span> <span class="o">=</span> <span class="n">buy_record</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">to_list</span><span class="p">()</span>
+        <span class="n">buy_amount</span> <span class="o">=</span> <span class="n">buy_record</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span>
+        <span class="n">buy_price</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_price_list</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">buy_index</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span>
+        <span class="n">total_expenditure</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">multiply</span><span class="p">(</span><span class="n">buy_amount</span><span class="p">,</span> <span class="n">buy_price</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">total_expenditure</span></div>
+
+<div class="viewcode-block" id="Recorder.get_income"><a class="viewcode-back" href="../../Recorder.html#crypto_env.recorder.Recorder.get_income">[docs]</a>    <span class="k">def</span> <span class="nf">get_income</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">idx</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Calculate how many value does the agent earn.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            idx (int, optional): How many transactions to involve. Defaults to None.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            float</span>
+<span class="sd">        &quot;&quot;&quot;</span>        
+        <span class="k">if</span> <span class="n">idx</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">idx</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_idx</span>
+        <span class="n">transaction_record</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_transaction_record</span><span class="p">(</span><span class="n">idx</span><span class="p">)</span>
+        <span class="n">sell_record</span> <span class="o">=</span> <span class="n">transaction_record</span><span class="p">[</span><span class="n">transaction_record</span><span class="p">[</span><span class="s1">&#39;signal&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">]</span>
+        <span class="n">sell_index</span> <span class="o">=</span> <span class="n">sell_record</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">to_list</span><span class="p">()</span>
+        <span class="n">sell_amount</span> <span class="o">=</span> <span class="n">sell_record</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span>
+        <span class="n">sell_price</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_price_list</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">sell_index</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span>
+        <span class="n">total_income</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">multiply</span><span class="p">(</span><span class="n">sell_amount</span><span class="p">,</span> <span class="n">sell_price</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">total_income</span></div>
+
+<div class="viewcode-block" id="Recorder.get_fiat_balance"><a class="viewcode-back" href="../../Recorder.html#crypto_env.recorder.Recorder.get_fiat_balance">[docs]</a>    <span class="k">def</span> <span class="nf">get_fiat_balance</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">idx</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Calculate fiat balance</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            idx (int, optional): How many transactions to involve. Defaults to None.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            float</span>
+<span class="sd">        &quot;&quot;&quot;</span>        
+        <span class="k">if</span> <span class="n">idx</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">idx</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_idx</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_income</span><span class="p">(</span><span class="n">idx</span><span class="p">)</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_expenditure</span><span class="p">(</span><span class="n">idx</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Recorder.get_crypto_balance"><a class="viewcode-back" href="../../Recorder.html#crypto_env.recorder.Recorder.get_crypto_balance">[docs]</a>    <span class="k">def</span> <span class="nf">get_crypto_balance</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">idx</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Calculate cryptocurrency balance</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            idx (int, optional): How many transactions to involve. Defaults to None.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            _type_: _description_</span>
+<span class="sd">        &quot;&quot;&quot;</span>        
+        <span class="k">if</span> <span class="n">idx</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">idx</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_idx</span>
+        <span class="n">transaction_record</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_transaction_record</span><span class="p">(</span><span class="n">idx</span><span class="p">)</span>
+        <span class="n">sell_amount</span> <span class="o">=</span> <span class="n">transaction_record</span><span class="p">[</span><span class="n">transaction_record</span><span class="p">[</span><span class="s1">&#39;signal&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+        <span class="n">buy_amount</span> <span class="o">=</span> <span class="n">transaction_record</span><span class="p">[</span><span class="n">transaction_record</span><span class="p">[</span><span class="s1">&#39;signal&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">buy_amount</span> <span class="o">-</span> <span class="n">sell_amount</span></div>
+
+<div class="viewcode-block" id="Recorder.get_crypto_value"><a class="viewcode-back" href="../../Recorder.html#crypto_env.recorder.Recorder.get_crypto_value">[docs]</a>    <span class="k">def</span> <span class="nf">get_crypto_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">idx</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Calculate the value of crypto in balance</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            idx (int, optional): How many transactions to involve. Defaults to None.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            float</span>
+<span class="sd">        &quot;&quot;&quot;</span>        
+        <span class="k">if</span> <span class="n">idx</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">idx</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_idx</span>
+        <span class="n">crypto_balance</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_crypto_balance</span><span class="p">(</span><span class="n">idx</span><span class="p">)</span>
+        <span class="n">crypto_value</span> <span class="o">=</span> <span class="n">crypto_balance</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">_price_list</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">crypto_value</span></div>
+
+<div class="viewcode-block" id="Recorder.get_roi"><a class="viewcode-back" href="../../Recorder.html#crypto_env.recorder.Recorder.get_roi">[docs]</a>    <span class="k">def</span> <span class="nf">get_roi</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">idx</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Calculate the return of investment</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            idx (int, optional): How many transactions to involve. Defaults to None.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            float</span>
+<span class="sd">        &quot;&quot;&quot;</span>        
+        <span class="k">if</span> <span class="n">idx</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">idx</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_idx</span>
+        <span class="n">net_return</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_crypto_value</span><span class="p">(</span><span class="n">idx</span><span class="p">)</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_fiat_balance</span><span class="p">(</span><span class="n">idx</span><span class="p">)</span>
+        <span class="n">cost</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_expenditure</span><span class="p">(</span><span class="n">idx</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">net_return</span> <span class="o">/</span> <span class="p">(</span><span class="n">cost</span> <span class="o">+</span> <span class="mf">0.0001</span><span class="p">)</span></div></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Crinstaniev.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Algorithm &mdash; CryptoEnv 0.1.1 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Visualizer" href="Visualizer.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> CryptoEnv
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html#install-using-pip">Install Using <cite>pip</cite></a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="api.html">API</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="CryptoEnv.html">CryptoEnv</a></li>
+<li class="toctree-l2"><a class="reference internal" href="DataLoader.html">DataLoader</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Recorder.html">Recorder</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Visualizer.html">Visualizer</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Algorithm</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">CryptoEnv</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="api.html">API</a> &raquo;</li>
+      <li>Algorithm</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/Algorithm.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-crypto_env.algorithm">
+<span id="algorithm"></span><h1>Algorithm<a class="headerlink" href="#module-crypto_env.algorithm" title="Permalink to this headline"></a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="crypto_env.algorithm.Algorithm">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">crypto_env.algorithm.</span></span><span class="sig-name descname"><span class="pre">Algorithm</span></span><a class="reference internal" href="_modules/crypto_env/algorithm/algorithm.html#Algorithm"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#crypto_env.algorithm.Algorithm" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">abc.ABC</span></code></p>
+<p>The algorithm wrapper template for the customized agent</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="crypto_env.algorithm.Algorithm.take_action">
+<em class="property"><span class="pre">abstract</span> </em><span class="sig-name descname"><span class="pre">take_action</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">observation</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">info</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/crypto_env/algorithm/algorithm.html#Algorithm.take_action"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#crypto_env.algorithm.Algorithm.take_action" title="Permalink to this definition"></a></dt>
+<dd><p>Return an action from the action space.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>observation</strong> (<em>any</em>) – The observation from the environment.</p></li>
+<li><p><strong>info</strong> (<em>any</em><em>, </em><em>optional</em>) – The market information. Defaults to None.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>NotImplementedError</strong> – You have to implement this method</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="crypto_env.algorithm.BuyAndHold">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">crypto_env.algorithm.</span></span><span class="sig-name descname"><span class="pre">BuyAndHold</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">buy_amount</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/crypto_env/algorithm/buy_and_hold.html#BuyAndHold"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#crypto_env.algorithm.BuyAndHold" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#crypto_env.algorithm.Algorithm" title="crypto_env.algorithm.algorithm.Algorithm"><code class="xref py py-class docutils literal notranslate"><span class="pre">crypto_env.algorithm.algorithm.Algorithm</span></code></a></p>
+<p>An example implementation of class <a class="reference internal" href="#crypto_env.algorithm.Algorithm" title="crypto_env.algorithm.Algorithm"><code class="xref py py-class docutils literal notranslate"><span class="pre">Algorithm</span></code></a>. This algorithm implements the buy and hold strategy. See <a class="reference external" href="https://www.investopedia.com/terms/b/buyandhold.asp">https://www.investopedia.com/terms/b/buyandhold.asp</a> for more information.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="crypto_env.algorithm.BuyAndHold.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">buy_amount</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/crypto_env/algorithm/buy_and_hold.html#BuyAndHold.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#crypto_env.algorithm.BuyAndHold.__init__" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>buy_amount</strong> – unit in cryptocurrency</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="crypto_env.algorithm.BuyAndHold.take_action">
+<span class="sig-name descname"><span class="pre">take_action</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">observation</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">info</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/crypto_env/algorithm/buy_and_hold.html#BuyAndHold.take_action"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#crypto_env.algorithm.BuyAndHold.take_action" title="Permalink to this definition"></a></dt>
+<dd><p>Return an action from the action space.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>observation</strong> (<em>any</em>) – The observation from the environment.</p></li>
+<li><p><strong>info</strong> (<em>any</em><em>, </em><em>optional</em>) – The market information. Defaults to None.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>NotImplementedError</strong> – You have to implement this method</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="crypto_env.algorithm.MovingAverage">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">crypto_env.algorithm.</span></span><span class="sig-name descname"><span class="pre">MovingAverage</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">price_feature_pos</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">short_window</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">30</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">long_window</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">180</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">initial_cap</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/crypto_env/algorithm/moving_average.html#MovingAverage"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#crypto_env.algorithm.MovingAverage" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#crypto_env.algorithm.Algorithm" title="crypto_env.algorithm.algorithm.Algorithm"><code class="xref py py-class docutils literal notranslate"><span class="pre">crypto_env.algorithm.algorithm.Algorithm</span></code></a></p>
+<p>An example implementation of class <a class="reference internal" href="#crypto_env.algorithm.Algorithm" title="crypto_env.algorithm.Algorithm"><code class="xref py py-class docutils literal notranslate"><span class="pre">Algorithm</span></code></a>. This algorithm implements the Dual Moving Average Crossover strategy. See <a class="reference external" href="https://faculty.fuqua.duke.edu/~charvey/Teaching/BA453_2002/CCAM/CCAM.htm">https://faculty.fuqua.duke.edu/~charvey/Teaching/BA453_2002/CCAM/CCAM.htm</a> for more information.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="crypto_env.algorithm.MovingAverage.take_action">
+<span class="sig-name descname"><span class="pre">take_action</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">observation</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">info</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/crypto_env/algorithm/moving_average.html#MovingAverage.take_action"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#crypto_env.algorithm.MovingAverage.take_action" title="Permalink to this definition"></a></dt>
+<dd><p>Return an action from the action space.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>observation</strong> (<em>any</em>) – The observation from the environment.</p></li>
+<li><p><strong>info</strong> (<em>any</em><em>, </em><em>optional</em>) – The market information. Defaults to None.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>NotImplementedError</strong> – You have to implement this method</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="Visualizer.html" class="btn btn-neutral float-left" title="Visualizer" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Crinstaniev.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

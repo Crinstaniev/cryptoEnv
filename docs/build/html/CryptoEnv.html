@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CryptoEnv &mdash; CryptoEnv 0.1.1 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="DataLoader" href="DataLoader.html" />
+    <link rel="prev" title="API" href="api.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> CryptoEnv
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html#install-using-pip">Install Using <cite>pip</cite></a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="api.html">API</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">CryptoEnv</a></li>
+<li class="toctree-l2"><a class="reference internal" href="DataLoader.html">DataLoader</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Recorder.html">Recorder</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Visualizer.html">Visualizer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Algorithm.html">Algorithm</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">CryptoEnv</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="api.html">API</a> &raquo;</li>
+      <li>CryptoEnv</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/CryptoEnv.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="cryptoenv">
+<h1>CryptoEnv<a class="headerlink" href="#cryptoenv" title="Permalink to this headline"></a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="crypto_env.core.CryptoEnv">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">crypto_env.core.</span></span><span class="sig-name descname"><span class="pre">CryptoEnv</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">max_sell</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_buy</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_sell</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_buy</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataloader</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="DataLoader.html#crypto_env.dataloader.DataLoader" title="crypto_env.dataloader.dataloader.DataLoader"><span class="pre">crypto_env.dataloader.dataloader.DataLoader</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">recorder</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="Recorder.html#crypto_env.recorder.Recorder" title="crypto_env.recorder.Recorder"><span class="pre">crypto_env.recorder.Recorder</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/crypto_env/core.html#CryptoEnv"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#crypto_env.core.CryptoEnv" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">gym.core.Env</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">abc.ABC</span></code></p>
+<p>This is the core module of <cite>CrytoEnv</cite>. It provide environment for agents to perform buy and sell actions and provide market states.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="crypto_env.core.CryptoEnv.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">max_sell</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_buy</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_sell</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_buy</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataloader</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="DataLoader.html#crypto_env.dataloader.DataLoader" title="crypto_env.dataloader.dataloader.DataLoader"><span class="pre">crypto_env.dataloader.dataloader.DataLoader</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">recorder</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="Recorder.html#crypto_env.recorder.Recorder" title="crypto_env.recorder.Recorder"><span class="pre">crypto_env.recorder.Recorder</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/crypto_env/core.html#CryptoEnv.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#crypto_env.core.CryptoEnv.__init__" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>max_sell</strong> (<em>float</em>) – maximum crypto to sell</p></li>
+<li><p><strong>max_buy</strong> (<em>float</em>) – maximum crypto to buy</p></li>
+<li><p><strong>min_sell</strong> (<em>float</em>) – minimum crypto to sell</p></li>
+<li><p><strong>min_buy</strong> (<em>float</em>) – minimum crypto to buy</p></li>
+<li><p><strong>dataloader</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">DataLoader</span></code>) – the <a class="reference internal" href="DataLoader.html#crypto_env.dataloader.DataLoader" title="crypto_env.dataloader.dataloader.DataLoader"><code class="xref py py-class docutils literal notranslate"><span class="pre">crypto_env.dataloader.dataloader.DataLoader</span></code></a> instance</p></li>
+<li><p><strong>recorder</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Recorder</span></code>) – the <code class="xref py py-class docutils literal notranslate"><span class="pre">Recorder</span></code> instance</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="crypto_env.core.CryptoEnv.buy">
+<span class="sig-name descname"><span class="pre">buy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/crypto_env/core.html#CryptoEnv.buy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#crypto_env.core.CryptoEnv.buy" title="Permalink to this definition"></a></dt>
+<dd><p>The agent buy some amount of crypto.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>value</strong> (<em>float</em>) – number of crypto to buy</p></li>
+<li><p><strong>verbose</strong> (<em>int</em><em>, </em><em>optional</em>) – whether to print out debug info. Defaults to 0.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>same return as <a class="reference internal" href="#crypto_env.core.CryptoEnv.step" title="crypto_env.core.CryptoEnv.step"><code class="xref py py-func docutils literal notranslate"><span class="pre">step()</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="crypto_env.core.CryptoEnv.first_observation">
+<span class="sig-name descname"><span class="pre">first_observation</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/crypto_env/core.html#CryptoEnv.first_observation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#crypto_env.core.CryptoEnv.first_observation" title="Permalink to this definition"></a></dt>
+<dd><p>Return the first observation</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>return a dictionary structured dict(features, index)</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="crypto_env.core.CryptoEnv.get_reward">
+<em class="property"><span class="pre">abstract</span> <span class="pre">classmethod</span> </em><span class="sig-name descname"><span class="pre">get_reward</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/crypto_env/core.html#CryptoEnv.get_reward"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#crypto_env.core.CryptoEnv.get_reward" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>the reward for agent after taking an action</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="crypto_env.core.CryptoEnv.hold">
+<span class="sig-name descname"><span class="pre">hold</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/crypto_env/core.html#CryptoEnv.hold"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#crypto_env.core.CryptoEnv.hold" title="Permalink to this definition"></a></dt>
+<dd><p>The agent does not want to do anything in this step</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>verbose</strong> (<em>int</em><em>, </em><em>optional</em>) – whether to print out debug info. Defaults to 0.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>same return as <a class="reference internal" href="#crypto_env.core.CryptoEnv.step" title="crypto_env.core.CryptoEnv.step"><code class="xref py py-func docutils literal notranslate"><span class="pre">step()</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="crypto_env.core.CryptoEnv.meta">
+<span class="sig-name descname"><span class="pre">meta</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/crypto_env/core.html#CryptoEnv.meta"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#crypto_env.core.CryptoEnv.meta" title="Permalink to this definition"></a></dt>
+<dd><p>Return the meta information of the environment</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>the meta of the env</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="crypto_env.core.CryptoEnv.render">
+<span class="sig-name descname"><span class="pre">render</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'human'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/crypto_env/core.html#CryptoEnv.render"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#crypto_env.core.CryptoEnv.render" title="Permalink to this definition"></a></dt>
+<dd><p>Placeholder. Not implemented yet.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>mode</strong> (<em>str</em><em>, </em><em>optional</em>) – Defaults to “human”.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="crypto_env.core.CryptoEnv.reset">
+<span class="sig-name descname"><span class="pre">reset</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/crypto_env/core.html#CryptoEnv.reset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#crypto_env.core.CryptoEnv.reset" title="Permalink to this definition"></a></dt>
+<dd><p>Reset the environment to prepare for a new episode</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p></p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#crypto_env.core.CryptoEnv" title="crypto_env.core.CryptoEnv"><code class="xref py py-class docutils literal notranslate"><span class="pre">CryptoEnv</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="crypto_env.core.CryptoEnv.sell">
+<span class="sig-name descname"><span class="pre">sell</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/crypto_env/core.html#CryptoEnv.sell"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#crypto_env.core.CryptoEnv.sell" title="Permalink to this definition"></a></dt>
+<dd><p>The agent sell some amount of crypto.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>value</strong> (<em>float</em>) – number of crypto to sell</p></li>
+<li><p><strong>verbose</strong> (<em>int</em><em>, </em><em>optional</em>) – whether to print out debug info. Defaults to 0.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>same return as <a class="reference internal" href="#crypto_env.core.CryptoEnv.step" title="crypto_env.core.CryptoEnv.step"><code class="xref py py-func docutils literal notranslate"><span class="pre">step()</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="crypto_env.core.CryptoEnv.step">
+<span class="sig-name descname"><span class="pre">step</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">action</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/crypto_env/core.html#CryptoEnv.step"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#crypto_env.core.CryptoEnv.step" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>action</strong> (<em>dict</em><em>, </em><em>optional</em>) – action to take. Defaults to None.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>agent’s observation after taking the action (numpy array),
+reward of the action (float),
+whether the episode is to the end (bool), and
+diagnostic information for debugging (any).</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="api.html" class="btn btn-neutral float-left" title="API" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="DataLoader.html" class="btn btn-neutral float-right" title="DataLoader" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Crinstaniev.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>crypto_env.core &mdash; CryptoEnv 0.1.1 documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> CryptoEnv
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html#install-using-pip">Install Using <cite>pip</cite></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api.html">API</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">CryptoEnv</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+      <li>crypto_env.core</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for crypto_env.core</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">abc</span> <span class="kn">import</span> <span class="n">ABC</span><span class="p">,</span> <span class="n">abstractclassmethod</span>
+<span class="kn">from</span> <span class="nn">gym.spaces</span> <span class="kn">import</span> <span class="n">Box</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Discrete</span>
+<span class="kn">import</span> <span class="nn">gym</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="kn">from</span> <span class="nn">crypto_env.types</span> <span class="kn">import</span> <span class="n">Transaction</span><span class="p">,</span> <span class="n">create_info_type</span>
+<span class="kn">from</span> <span class="nn">crypto_env.dataloader.dataloader</span> <span class="kn">import</span> <span class="n">DataLoader</span>
+<span class="kn">from</span> <span class="nn">crypto_env.recorder</span> <span class="kn">import</span> <span class="n">Recorder</span>
+
+
+<div class="viewcode-block" id="CryptoEnv"><a class="viewcode-back" href="../../CryptoEnv.html#crypto_env.core.CryptoEnv">[docs]</a><span class="k">class</span> <span class="nc">CryptoEnv</span><span class="p">(</span><span class="n">gym</span><span class="o">.</span><span class="n">Env</span><span class="p">,</span> <span class="n">ABC</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This is the core module of `CrytoEnv`. It provide environment for agents to perform buy and sell actions and provide market states.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="CryptoEnv.__init__"><a class="viewcode-back" href="../../CryptoEnv.html#crypto_env.core.CryptoEnv.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">max_sell</span><span class="p">,</span> <span class="n">max_buy</span><span class="p">,</span> <span class="n">min_sell</span><span class="p">,</span> <span class="n">min_buy</span><span class="p">,</span> <span class="n">dataloader</span><span class="p">:</span> <span class="n">DataLoader</span><span class="p">,</span>
+                 <span class="n">recorder</span><span class="p">:</span> <span class="n">Recorder</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;__init__</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            max_sell (float): maximum crypto to sell</span>
+<span class="sd">            max_buy (float): maximum crypto to buy</span>
+<span class="sd">            min_sell (float): minimum crypto to sell</span>
+<span class="sd">            min_buy (float): minimum crypto to buy</span>
+<span class="sd">            dataloader (:py:class:`DataLoader`): the :py:class:`crypto_env.dataloader.dataloader.DataLoader` instance</span>
+<span class="sd">            recorder (:py:class:`Recorder`): the :py:class:`Recorder` instance</span>
+<span class="sd">        &quot;&quot;&quot;</span>        
+        
+        <span class="c1"># transaction fees are not implemented in this environment. should be implemented in the algorithm (agent)</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">CryptoEnv</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+
+        <span class="k">assert</span> <span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">dataloader</span><span class="p">,</span> <span class="n">DataLoader</span><span class="p">))</span>
+
+        <span class="c1"># check if transaction fee loaded</span>
+        <span class="k">if</span> <span class="n">dataloader</span><span class="o">.</span><span class="n">get_transaction_fee_type</span><span class="p">()</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Transaction fee not set.&quot;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">dataloader</span> <span class="o">=</span> <span class="n">dataloader</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_len_data</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">dataloader</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_len_features</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">dataloader</span><span class="o">.</span><span class="n">_features</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Info</span> <span class="o">=</span> <span class="n">create_info_type</span><span class="p">(</span><span class="n">dataloader</span><span class="o">.</span><span class="n">_features</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">recorder</span> <span class="o">=</span> <span class="n">recorder</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_max_sell</span> <span class="o">=</span> <span class="n">max_sell</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_max_buy</span> <span class="o">=</span> <span class="n">max_buy</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_min_sell</span> <span class="o">=</span> <span class="n">min_sell</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_min_buy</span> <span class="o">=</span> <span class="n">min_buy</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_is_fix_transaction_fee</span> <span class="o">=</span> <span class="n">dataloader</span><span class="o">.</span><span class="n">get_transaction_fee_type</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;fix&#39;</span>
+        
+        <span class="c1"># should be reset to False for each iteration</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_is_done</span> <span class="o">=</span> <span class="kc">False</span>
+
+        <span class="c1"># define observation space: period market data. won&#39;t change due to action of the agent.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">observation_space</span> <span class="o">=</span> <span class="n">Dict</span><span class="p">({</span>
+            <span class="s1">&#39;index&#39;</span><span class="p">:</span> <span class="n">Box</span><span class="p">(</span><span class="n">low</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">high</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_len_data</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,),</span>
+                         <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">),</span>
+            <span class="s1">&#39;features&#39;</span><span class="p">:</span> <span class="n">Box</span><span class="p">(</span><span class="n">low</span><span class="o">=-</span><span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">,</span>
+                            <span class="n">high</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">,</span>
+                            <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dataloader</span><span class="o">.</span><span class="n">_features</span><span class="p">),)),</span>
+        <span class="p">})</span>
+
+        <span class="c1"># define action space:</span>
+        <span class="c1"># signal: 0: buy, 1: sell, 2: hold.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">action_space</span> <span class="o">=</span> <span class="n">Dict</span><span class="p">({</span>
+            <span class="s1">&#39;signal&#39;</span><span class="p">:</span> <span class="n">Discrete</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span>
+            <span class="s1">&#39;value&#39;</span><span class="p">:</span> <span class="n">Box</span><span class="p">(</span><span class="n">low</span><span class="o">=</span><span class="nb">min</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_min_buy</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_min_sell</span><span class="p">),</span>
+                         <span class="n">high</span><span class="o">=</span><span class="nb">max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_max_sell</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_max_buy</span><span class="p">),</span>
+                         <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,))</span>
+        <span class="p">})</span></div>
+
+<div class="viewcode-block" id="CryptoEnv.step"><a class="viewcode-back" href="../../CryptoEnv.html#crypto_env.core.CryptoEnv.step">[docs]</a>    <span class="k">def</span> <span class="nf">step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;step</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            action (dict, optional): action to take. Defaults to None.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            agent&#39;s observation after taking the action (numpy array),</span>
+<span class="sd">            reward of the action (float),</span>
+<span class="sd">            whether the episode is to the end (bool), and</span>
+<span class="sd">            diagnostic information for debugging (any).</span>
+<span class="sd">        &quot;&quot;&quot;</span>        
+        
+        <span class="c1"># the history data will be returned as info from the recorder.</span>
+        <span class="n">signal</span> <span class="o">=</span> <span class="n">action</span><span class="p">[</span><span class="s1">&#39;signal&#39;</span><span class="p">]</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="n">action</span><span class="p">[</span><span class="s1">&#39;value&#39;</span><span class="p">]</span>
+        <span class="n">transaction</span> <span class="o">=</span> <span class="n">Transaction</span><span class="p">(</span><span class="n">signal</span><span class="o">=</span><span class="n">signal</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="n">value</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">idx</span><span class="p">,</span> <span class="n">info</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dataloader</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">StopIteration</span><span class="p">:</span>
+            <span class="n">idx</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataloader</span><span class="o">.</span><span class="n">idx</span> <span class="o">+</span> <span class="mi">1</span>
+            <span class="n">info</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">observation</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+            <span class="n">features</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">info</span><span class="p">)),</span>
+            <span class="n">index</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">idx</span><span class="p">])</span>
+        <span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">recorder</span><span class="o">.</span><span class="n">insert_transaction</span><span class="p">(</span><span class="n">transaction</span><span class="o">=</span><span class="n">transaction</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">recorder</span><span class="o">.</span><span class="n">insert_info</span><span class="p">(</span><span class="n">info</span><span class="o">=</span><span class="n">info</span><span class="p">)</span>
+        
+        <span class="n">info</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">idx</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dataloader</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_is_done</span> <span class="o">=</span> <span class="kc">True</span>
+            
+        <span class="n">reward</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_reward</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="n">observation</span><span class="p">,</span> <span class="n">reward</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_done</span><span class="p">,</span> <span class="n">info</span></div>
+    
+<div class="viewcode-block" id="CryptoEnv.get_reward"><a class="viewcode-back" href="../../CryptoEnv.html#crypto_env.core.CryptoEnv.get_reward">[docs]</a>    <span class="nd">@abstractclassmethod</span>
+    <span class="k">def</span> <span class="nf">get_reward</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;get_reward</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            float: the reward for agent after taking an action</span>
+<span class="sd">        &quot;&quot;&quot;</span>        
+        <span class="k">return</span> <span class="mf">0.0</span></div>
+
+<div class="viewcode-block" id="CryptoEnv.buy"><a class="viewcode-back" href="../../CryptoEnv.html#crypto_env.core.CryptoEnv.buy">[docs]</a>    <span class="k">def</span> <span class="nf">buy</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;buy</span>
+<span class="sd">        </span>
+<span class="sd">        The agent buy some amount of crypto.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            value (float): number of crypto to buy</span>
+<span class="sd">            verbose (int, optional): whether to print out debug info. Defaults to 0.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            same return as :py:func:`step`</span>
+<span class="sd">        &quot;&quot;&quot;</span>        
+        <span class="n">fee_type</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataloader</span><span class="o">.</span><span class="n">get_transaction_fee_type</span><span class="p">()</span>
+        <span class="n">fee</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataloader</span><span class="o">.</span><span class="n">get_transaction_fee</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">fee_type</span> <span class="o">==</span> <span class="s1">&#39;fix&#39;</span><span class="p">:</span>
+            <span class="n">value</span> <span class="o">-=</span> <span class="n">value</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="n">value</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">fee</span><span class="p">)</span>
+        <span class="n">action</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+            <span class="n">signal</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+            <span class="n">value</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">value</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+        <span class="p">)</span>
+        <span class="c1"># sanity check</span>
+        <span class="k">if</span> <span class="n">value</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">_min_buy</span> <span class="ow">or</span> <span class="n">value</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">_max_buy</span><span class="p">:</span>
+            <span class="n">action</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+                <span class="n">signal</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+                <span class="n">value</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+            <span class="p">)</span>
+            <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;sell failed&quot;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">action</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="CryptoEnv.sell"><a class="viewcode-back" href="../../CryptoEnv.html#crypto_env.core.CryptoEnv.sell">[docs]</a>    <span class="k">def</span> <span class="nf">sell</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;sell</span>
+<span class="sd">        </span>
+<span class="sd">        The agent sell some amount of crypto.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            value (float): number of crypto to sell</span>
+<span class="sd">            verbose (int, optional): whether to print out debug info. Defaults to 0.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            same return as :py:func:`step`</span>
+<span class="sd">        &quot;&quot;&quot;</span>        
+        <span class="n">fee_type</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataloader</span><span class="o">.</span><span class="n">get_transaction_fee_type</span><span class="p">()</span>
+        <span class="n">fee</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataloader</span><span class="o">.</span><span class="n">get_transaction_fee</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">fee_type</span> <span class="o">==</span> <span class="s1">&#39;fix&#39;</span><span class="p">:</span>
+            <span class="n">value</span> <span class="o">-=</span> <span class="n">fee</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="n">value</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">fee</span><span class="p">)</span>
+        <span class="n">action</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+            <span class="n">signal</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+            <span class="n">value</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">value</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+        <span class="p">)</span>
+        <span class="c1"># sanity check</span>
+        <span class="k">if</span> <span class="n">value</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">_min_sell</span> <span class="ow">or</span> <span class="n">value</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">_max_sell</span><span class="p">:</span>
+            <span class="n">action</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+                <span class="n">signal</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+                <span class="n">value</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+            <span class="p">)</span>
+            <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;buy failed&quot;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">action</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="CryptoEnv.hold"><a class="viewcode-back" href="../../CryptoEnv.html#crypto_env.core.CryptoEnv.hold">[docs]</a>    <span class="k">def</span> <span class="nf">hold</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;hold</span>
+<span class="sd">        </span>
+<span class="sd">        The agent does not want to do anything in this step</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            verbose (int, optional): whether to print out debug info. Defaults to 0.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            same return as :py:func:`step`</span>
+<span class="sd">        &quot;&quot;&quot;</span>        
+        <span class="c1"># hold will always be successful.</span>
+        <span class="n">action</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+            <span class="n">signal</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+            <span class="n">value</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">action</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="CryptoEnv.first_observation"><a class="viewcode-back" href="../../CryptoEnv.html#crypto_env.core.CryptoEnv.first_observation">[docs]</a>    <span class="k">def</span> <span class="nf">first_observation</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return the first observation</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            dict: return a dictionary structured dict(features, index)</span>
+<span class="sd">                    </span>
+<span class="sd">        &quot;&quot;&quot;</span>        
+        <span class="bp">self</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
+        <span class="n">idx</span><span class="p">,</span> <span class="n">info</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dataloader</span><span class="p">)</span>
+        <span class="n">observation</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+            <span class="n">features</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">info</span><span class="p">)),</span>
+            <span class="n">index</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">])</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">observation</span></div>
+
+<div class="viewcode-block" id="CryptoEnv.reset"><a class="viewcode-back" href="../../CryptoEnv.html#crypto_env.core.CryptoEnv.reset">[docs]</a>    <span class="k">def</span> <span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Reset the environment to prepare for a new episode</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            :py:class:`CryptoEnv`: </span>
+<span class="sd">            </span>
+<span class="sd">        &quot;&quot;&quot;</span>        
+        <span class="bp">self</span><span class="o">.</span><span class="n">dataloader</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">recorder</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_is_done</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">return</span> <span class="bp">self</span></div>
+
+<div class="viewcode-block" id="CryptoEnv.render"><a class="viewcode-back" href="../../CryptoEnv.html#crypto_env.core.CryptoEnv.render">[docs]</a>    <span class="k">def</span> <span class="nf">render</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;human&quot;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Placeholder. Not implemented yet.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            mode (str, optional): Defaults to &quot;human&quot;.</span>
+<span class="sd">        &quot;&quot;&quot;</span>        
+        <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="CryptoEnv.meta"><a class="viewcode-back" href="../../CryptoEnv.html#crypto_env.core.CryptoEnv.meta">[docs]</a>    <span class="k">def</span> <span class="nf">meta</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return the meta information of the environment</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            dict: the meta of the env</span>
+<span class="sd">        &quot;&quot;&quot;</span>        
+        <span class="c1"># return meta information</span>
+        <span class="k">return</span> <span class="nb">dict</span><span class="p">(</span>
+            <span class="n">signals</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                <span class="n">buy</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+                <span class="n">sell</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+                <span class="n">hold</span><span class="o">=</span><span class="mi">2</span>
+            <span class="p">)</span>
+        <span class="p">)</span></div></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Crinstaniev.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

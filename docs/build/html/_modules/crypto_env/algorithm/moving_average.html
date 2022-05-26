@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>crypto_env.algorithm.moving_average &mdash; CryptoEnv 0.1.1 documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../../index.html" class="icon icon-home"> CryptoEnv
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html#install-using-pip">Install Using <cite>pip</cite></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api.html">API</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">CryptoEnv</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+      <li>crypto_env.algorithm.moving_average</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for crypto_env.algorithm.moving_average</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">Algorithm</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">deque</span>
+
+
+<div class="viewcode-block" id="MovingAverage"><a class="viewcode-back" href="../../../Algorithm.html#crypto_env.algorithm.MovingAverage">[docs]</a><span class="k">class</span> <span class="nc">MovingAverage</span><span class="p">(</span><span class="n">Algorithm</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;An example implementation of class :py:class:`Algorithm`. This algorithm implements the Dual Moving Average Crossover strategy. See https://faculty.fuqua.duke.edu/~charvey/Teaching/BA453_2002/CCAM/CCAM.htm for more information.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">price_feature_pos</span><span class="p">,</span> <span class="n">short_window</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">long_window</span><span class="o">=</span><span class="mi">180</span><span class="p">,</span>
+                 <span class="n">initial_cap</span><span class="o">=</span><span class="mi">100</span><span class="p">):</span>
+        <span class="c1"># simplified version of moving average. buy all cap / sell all cap at once.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_wallet_usd</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">(</span><span class="n">initial_cap</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_wallet_crypto</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_price_feature_pos</span> <span class="o">=</span> <span class="n">price_feature_pos</span>
+
+        <span class="c1"># moving average things</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_short_window</span> <span class="o">=</span> <span class="n">deque</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">(</span><span class="mi">0</span><span class="p">)],</span> <span class="n">maxlen</span><span class="o">=</span><span class="n">short_window</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_long_window</span> <span class="o">=</span> <span class="n">deque</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">(</span><span class="mi">0</span><span class="p">)],</span> <span class="n">maxlen</span><span class="o">=</span><span class="n">long_window</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_short_avg_history</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_long_avg_history</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">_update_windows</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">price</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_short_window</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">(</span><span class="n">price</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_long_window</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">(</span><span class="n">price</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_short_avg_history</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_short_avg</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_long_avg_history</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_long_avg</span><span class="p">())</span>
+
+    <span class="k">def</span> <span class="nf">_get_long_avg</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_long_window</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">_get_short_avg</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_short_window</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">_generate_signal</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">cur_short</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_short_avg_history</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">prev_short</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_short_avg_history</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span>
+        <span class="n">cur_long</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_long_avg_history</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">prev_long</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_long_avg_history</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span>
+        <span class="n">is_cross</span> <span class="o">=</span> <span class="p">(</span><span class="n">cur_short</span> <span class="o">-</span> <span class="n">cur_long</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">prev_short</span> <span class="o">-</span> <span class="n">prev_long</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">0</span>
+        <span class="k">if</span> <span class="n">is_cross</span> <span class="ow">and</span> <span class="n">cur_short</span> <span class="o">&gt;</span> <span class="n">cur_long</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mi">0</span>
+        <span class="k">elif</span> <span class="n">is_cross</span> <span class="ow">and</span> <span class="n">cur_long</span> <span class="o">&gt;</span> <span class="n">cur_short</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mi">1</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mi">2</span>
+
+<div class="viewcode-block" id="MovingAverage.take_action"><a class="viewcode-back" href="../../../Algorithm.html#crypto_env.algorithm.MovingAverage.take_action">[docs]</a>    <span class="k">def</span> <span class="nf">take_action</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">observation</span><span class="p">,</span> <span class="n">info</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="n">price</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">(</span><span class="n">observation</span><span class="p">[</span><span class="s1">&#39;features&#39;</span><span class="p">][</span><span class="bp">self</span><span class="o">.</span><span class="n">_price_feature_pos</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_update_windows</span><span class="p">(</span><span class="n">price</span><span class="o">=</span><span class="n">price</span><span class="p">)</span>
+        <span class="n">signal</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_generate_signal</span><span class="p">()</span>
+        <span class="n">crypto_to_buy</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_wallet_usd</span> <span class="o">/</span> <span class="n">price</span>
+        <span class="n">crypto_to_sell</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_wallet_crypto</span>
+
+        <span class="n">action</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="n">signal</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>  <span class="c1"># buy</span>
+            <span class="n">action</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+                <span class="n">signal</span><span class="o">=</span><span class="n">signal</span><span class="p">,</span>
+                <span class="n">value</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">crypto_to_buy</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+            <span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_wallet_crypto</span> <span class="o">+=</span> <span class="n">crypto_to_buy</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_wallet_usd</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">if</span> <span class="n">signal</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>  <span class="c1"># sell</span>
+            <span class="n">action</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+                <span class="n">signal</span><span class="o">=</span><span class="n">signal</span><span class="p">,</span>
+                <span class="n">value</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">crypto_to_sell</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+            <span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_wallet_usd</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_wallet_crypto</span> <span class="o">*</span> <span class="n">price</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_wallet_crypto</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">if</span> <span class="n">signal</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>  <span class="c1"># hold</span>
+            <span class="n">action</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+                <span class="n">signal</span><span class="o">=</span><span class="n">signal</span><span class="p">,</span>
+                <span class="n">value</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+            <span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">action</span></div></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Crinstaniev.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

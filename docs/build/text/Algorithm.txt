@@ -1,0 +1,73 @@
+Algorithm
+*********
+
+class crypto_env.algorithm.Algorithm
+
+   Bases: "abc.ABC"
+
+   The algorithm wrapper template for the customized agent
+
+   abstract take_action(observation, info=None)
+
+      Return an action from the action space.
+
+      Parameters:
+         * **observation** (*any*) – The observation from the
+           environment.
+
+         * **info** (*any**, **optional*) – The market information.
+           Defaults to None.
+
+      Raises:
+         **NotImplementedError** – You have to implement this method
+
+class crypto_env.algorithm.BuyAndHold(buy_amount: float)
+
+   Bases: "crypto_env.algorithm.algorithm.Algorithm"
+
+   An example implementation of class "Algorithm". This algorithm
+   implements the buy and hold strategy. See
+   https://www.investopedia.com/terms/b/buyandhold.asp for more
+   information.
+
+   __init__(buy_amount: float)
+
+      Parameters:
+         **buy_amount** – unit in cryptocurrency
+
+   take_action(observation, info=None)
+
+      Return an action from the action space.
+
+      Parameters:
+         * **observation** (*any*) – The observation from the
+           environment.
+
+         * **info** (*any**, **optional*) – The market information.
+           Defaults to None.
+
+      Raises:
+         **NotImplementedError** – You have to implement this method
+
+class crypto_env.algorithm.MovingAverage(price_feature_pos, short_window=30, long_window=180, initial_cap=100)
+
+   Bases: "crypto_env.algorithm.algorithm.Algorithm"
+
+   An example implementation of class "Algorithm". This algorithm
+   implements the Dual Moving Average Crossover strategy. See https:/
+   /faculty.fuqua.duke.edu/~charvey/Teaching/BA453_2002/CCAM/CCAM.htm
+   for more information.
+
+   take_action(observation, info=None)
+
+      Return an action from the action space.
+
+      Parameters:
+         * **observation** (*any*) – The observation from the
+           environment.
+
+         * **info** (*any**, **optional*) – The market information.
+           Defaults to None.
+
+      Raises:
+         **NotImplementedError** – You have to implement this method

@@ -1,0 +1,116 @@
+CryptoEnv
+*********
+
+class crypto_env.core.CryptoEnv(max_sell, max_buy, min_sell, min_buy, dataloader: crypto_env.dataloader.dataloader.DataLoader, recorder: crypto_env.recorder.Recorder)
+
+   Bases: "gym.core.Env", "abc.ABC"
+
+   This is the core module of *CrytoEnv*. It provide environment for
+   agents to perform buy and sell actions and provide market states.
+
+   __init__(max_sell, max_buy, min_sell, min_buy, dataloader: crypto_env.dataloader.dataloader.DataLoader, recorder: crypto_env.recorder.Recorder)
+
+      Parameters:
+         * **max_sell** (*float*) – maximum crypto to sell
+
+         * **max_buy** (*float*) – maximum crypto to buy
+
+         * **min_sell** (*float*) – minimum crypto to sell
+
+         * **min_buy** (*float*) – minimum crypto to buy
+
+         * **dataloader** ("DataLoader") – the
+           "crypto_env.dataloader.dataloader.DataLoader" instance
+
+         * **recorder** ("Recorder") – the "Recorder" instance
+
+   buy(value, verbose=0)
+
+      The agent buy some amount of crypto.
+
+      Parameters:
+         * **value** (*float*) – number of crypto to buy
+
+         * **verbose** (*int**, **optional*) – whether to print out
+           debug info. Defaults to 0.
+
+      Returns:
+         same return as "step()"
+
+   first_observation()
+
+      Return the first observation
+
+      Returns:
+         return a dictionary structured dict(features, index)
+
+      Return type:
+         dict
+
+   abstract classmethod get_reward()
+
+      Returns:
+         the reward for agent after taking an action
+
+      Return type:
+         float
+
+   hold(verbose=0)
+
+      The agent does not want to do anything in this step
+
+      Parameters:
+         **verbose** (*int**, **optional*) – whether to print out
+         debug info. Defaults to 0.
+
+      Returns:
+         same return as "step()"
+
+   meta()
+
+      Return the meta information of the environment
+
+      Returns:
+         the meta of the env
+
+      Return type:
+         dict
+
+   render(mode='human')
+
+      Placeholder. Not implemented yet.
+
+      Parameters:
+         **mode** (*str**, **optional*) – Defaults to “human”.
+
+   reset()
+
+      Reset the environment to prepare for a new episode
+
+      Returns:
+      Return type:
+         "CryptoEnv"
+
+   sell(value, verbose=0)
+
+      The agent sell some amount of crypto.
+
+      Parameters:
+         * **value** (*float*) – number of crypto to sell
+
+         * **verbose** (*int**, **optional*) – whether to print out
+           debug info. Defaults to 0.
+
+      Returns:
+         same return as "step()"
+
+   step(action=None)
+
+      Parameters:
+         **action** (*dict**, **optional*) – action to take. Defaults
+         to None.
+
+      Returns:
+         agent’s observation after taking the action (numpy array),
+         reward of the action (float), whether the episode is to the
+         end (bool), and diagnostic information for debugging (any).

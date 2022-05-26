@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DataLoader &mdash; CryptoEnv 0.1.1 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Recorder" href="Recorder.html" />
+    <link rel="prev" title="CryptoEnv" href="CryptoEnv.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> CryptoEnv
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html#install-using-pip">Install Using <cite>pip</cite></a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="api.html">API</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="CryptoEnv.html">CryptoEnv</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">DataLoader</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Recorder.html">Recorder</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Visualizer.html">Visualizer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Algorithm.html">Algorithm</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">CryptoEnv</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="api.html">API</a> &raquo;</li>
+      <li>DataLoader</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/DataLoader.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-crypto_env.dataloader">
+<span id="dataloader"></span><h1>DataLoader<a class="headerlink" href="#module-crypto_env.dataloader" title="Permalink to this headline"></a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="crypto_env.dataloader.DataLoader">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">crypto_env.dataloader.</span></span><span class="sig-name descname"><span class="pre">DataLoader</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">start_idx</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end_idx</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/crypto_env/dataloader/dataloader.html#DataLoader"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#crypto_env.dataloader.DataLoader" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">abc.ABC</span></code></p>
+<p>The DataLoader module is for user to map arbitrary data source to form that the environment can recognize.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="crypto_env.dataloader.DataLoader.__init__">
+<em class="property"><span class="pre">abstract</span> </em><span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">start_idx</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end_idx</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/crypto_env/dataloader/dataloader.html#DataLoader.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#crypto_env.dataloader.DataLoader.__init__" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>start_idx</strong> (<em>int</em>) – Start index</p></li>
+<li><p><strong>end_idx</strong> (<em>int</em>) – End index</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="crypto_env.dataloader.DataLoader.__iter__">
+<span class="sig-name descname"><span class="pre">__iter__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/crypto_env/dataloader/dataloader.html#DataLoader.__iter__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#crypto_env.dataloader.DataLoader.__iter__" title="Permalink to this definition"></a></dt>
+<dd><p>This object is iterable. See <a class="reference external" href="https://www.w3schools.com/python/python_iterators.asp">https://www.w3schools.com/python/python_iterators.asp</a> for more details.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="crypto_env.dataloader.DataLoader.__len__">
+<em class="property"><span class="pre">abstract</span> </em><span class="sig-name descname"><span class="pre">__len__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/crypto_env/dataloader/dataloader.html#DataLoader.__len__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#crypto_env.dataloader.DataLoader.__len__" title="Permalink to this definition"></a></dt>
+<dd><p>Return the length of the iterable</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p><strong>NotImplementedError</strong> – </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="crypto_env.dataloader.DataLoader.__next__">
+<em class="property"><span class="pre">abstract</span> </em><span class="sig-name descname"><span class="pre">__next__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/crypto_env/dataloader/dataloader.html#DataLoader.__next__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#crypto_env.dataloader.DataLoader.__next__" title="Permalink to this definition"></a></dt>
+<dd><p>See <a class="reference external" href="https://www.w3schools.com/python/python_iterators.asp">https://www.w3schools.com/python/python_iterators.asp</a> for more details</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="crypto_env.dataloader.DataLoader.get_duration">
+<em class="property"><span class="pre">abstract</span> </em><span class="sig-name descname"><span class="pre">get_duration</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/crypto_env/dataloader/dataloader.html#DataLoader.get_duration"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#crypto_env.dataloader.DataLoader.get_duration" title="Permalink to this definition"></a></dt>
+<dd><p>Get length of the data source.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p><strong>NotImplementedError</strong> – </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="crypto_env.dataloader.DataLoader.get_feature">
+<em class="property"><span class="pre">abstract</span> </em><span class="sig-name descname"><span class="pre">get_feature</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">feature_name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/crypto_env/dataloader/dataloader.html#DataLoader.get_feature"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#crypto_env.dataloader.DataLoader.get_feature" title="Permalink to this definition"></a></dt>
+<dd><p>Get input variables (features)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>feature_name</strong> (<em>str</em>) – name of the feature</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>NotImplementedError</strong> – </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="crypto_env.dataloader.DataLoader.get_idx">
+<span class="sig-name descname"><span class="pre">get_idx</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/crypto_env/dataloader/dataloader.html#DataLoader.get_idx"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#crypto_env.dataloader.DataLoader.get_idx" title="Permalink to this definition"></a></dt>
+<dd><p>Get current index</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p><strong>NotImplementedError</strong> – </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="crypto_env.dataloader.DataLoader.get_transaction_fee">
+<span class="sig-name descname"><span class="pre">get_transaction_fee</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">idx</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/crypto_env/dataloader/dataloader.html#DataLoader.get_transaction_fee"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#crypto_env.dataloader.DataLoader.get_transaction_fee" title="Permalink to this definition"></a></dt>
+<dd><p>Return the transaction fee list</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>idx</strong> (<em>int</em><em>, </em><em>optional</em>) – Number of transaction fee to return. Defaults to None.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="crypto_env.dataloader.DataLoader.get_transaction_fee_type">
+<span class="sig-name descname"><span class="pre">get_transaction_fee_type</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/crypto_env/dataloader/dataloader.html#DataLoader.get_transaction_fee_type"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#crypto_env.dataloader.DataLoader.get_transaction_fee_type" title="Permalink to this definition"></a></dt>
+<dd><p>Return the name of transaction fee type</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="crypto_env.dataloader.DataLoader.idx">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">idx</span></span><a class="headerlink" href="#crypto_env.dataloader.DataLoader.idx" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="crypto_env.dataloader.DataLoader.load_transaction_fee">
+<span class="sig-name descname"><span class="pre">load_transaction_fee</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">values</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fee_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'percentage'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/crypto_env/dataloader/dataloader.html#DataLoader.load_transaction_fee"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#crypto_env.dataloader.DataLoader.load_transaction_fee" title="Permalink to this definition"></a></dt>
+<dd><p>Load the transaction fee list</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>values</strong> (<em>list</em>) – Transaction fee list</p></li>
+<li><p><strong>fee_type</strong> (<em>str</em><em>, </em><em>optional</em>) – ‘percentage’ or ‘fix’. Defaults to ‘percentage’.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="crypto_env.dataloader.DataLoader.reset">
+<em class="property"><span class="pre">abstract</span> </em><span class="sig-name descname"><span class="pre">reset</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/crypto_env/dataloader/dataloader.html#DataLoader.reset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#crypto_env.dataloader.DataLoader.reset" title="Permalink to this definition"></a></dt>
+<dd><p>Reset the dataloader</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p><strong>NotImplementedError</strong> – </p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="crypto_env.dataloader.ETHLoader">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">crypto_env.dataloader.</span></span><span class="sig-name descname"><span class="pre">ETHLoader</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">base_dir</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start_idx</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end_idx</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">features</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dropna</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">download</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">url</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'https://raw.githubusercontent.com/coinmetrics/data/master/csv/eth.csv'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/crypto_env/dataloader/ethloader.html#ETHLoader"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#crypto_env.dataloader.ETHLoader" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#crypto_env.dataloader.DataLoader" title="crypto_env.dataloader.dataloader.DataLoader"><code class="xref py py-class docutils literal notranslate"><span class="pre">crypto_env.dataloader.dataloader.DataLoader</span></code></a></p>
+<p>Our example implementation of <a class="reference internal" href="#crypto_env.dataloader.DataLoader" title="crypto_env.dataloader.DataLoader"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataLoader</span></code></a> class. We use the Ethereum history data from the coinmetrics repo. See <a class="reference external" href="https://raw.githubusercontent.com/coinmetrics/data">https://raw.githubusercontent.com/coinmetrics/data</a> for more details.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="crypto_env.dataloader.ETHLoader.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">base_dir</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start_idx</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end_idx</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">features</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dropna</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">download</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">url</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'https://raw.githubusercontent.com/coinmetrics/data/master/csv/eth.csv'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/crypto_env/dataloader/ethloader.html#ETHLoader.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#crypto_env.dataloader.ETHLoader.__init__" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>base_dir</strong> (<em>str</em>) – Directory to save the download data</p></li>
+<li><p><strong>start_idx</strong> (<em>int</em>) – Where to start in the data source</p></li>
+<li><p><strong>end_idx</strong> (<em>int</em>) – Where to end in the data source</p></li>
+<li><p><strong>features</strong> (<em>list</em>) – Input variables for the environment</p></li>
+<li><p><strong>dropna</strong> (<em>bool</em><em>, </em><em>optional</em>) – Whether to drop lines including empty values. Defaults to False.</p></li>
+<li><p><strong>download</strong> (<em>bool</em><em>, </em><em>optional</em>) – Whether to re-download the data. Defaults to True.</p></li>
+<li><p><strong>url</strong> (<em>str</em><em>, </em><em>optional</em>) – Link to the data source. Defaults to “<a class="reference external" href="https://raw.githubusercontent.com/coinmetrics/data/master/csv/eth.csv">https://raw.githubusercontent.com/coinmetrics/data/master/csv/eth.csv</a>”.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="crypto_env.dataloader.ETHLoader.__len__">
+<span class="sig-name descname"><span class="pre">__len__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/crypto_env/dataloader/ethloader.html#ETHLoader.__len__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#crypto_env.dataloader.ETHLoader.__len__" title="Permalink to this definition"></a></dt>
+<dd><p>Number of items</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="crypto_env.dataloader.ETHLoader.get_duration">
+<span class="sig-name descname"><span class="pre">get_duration</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/crypto_env/dataloader/ethloader.html#ETHLoader.get_duration"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#crypto_env.dataloader.ETHLoader.get_duration" title="Permalink to this definition"></a></dt>
+<dd><p>Get length of the data source.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p><strong>NotImplementedError</strong> – </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="crypto_env.dataloader.ETHLoader.get_feature">
+<span class="sig-name descname"><span class="pre">get_feature</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">feature_name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/crypto_env/dataloader/ethloader.html#ETHLoader.get_feature"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#crypto_env.dataloader.ETHLoader.get_feature" title="Permalink to this definition"></a></dt>
+<dd><p>Get input variables (features)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>feature_name</strong> (<em>str</em>) – name of the feature</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>NotImplementedError</strong> – </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="crypto_env.dataloader.ETHLoader.get_idx">
+<span class="sig-name descname"><span class="pre">get_idx</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/crypto_env/dataloader/ethloader.html#ETHLoader.get_idx"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#crypto_env.dataloader.ETHLoader.get_idx" title="Permalink to this definition"></a></dt>
+<dd><p>Get current index</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p><strong>NotImplementedError</strong> – </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="crypto_env.dataloader.ETHLoader.reset">
+<span class="sig-name descname"><span class="pre">reset</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/crypto_env/dataloader/ethloader.html#ETHLoader.reset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#crypto_env.dataloader.ETHLoader.reset" title="Permalink to this definition"></a></dt>
+<dd><p>Reset the dataloader</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p><strong>NotImplementedError</strong> – </p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="CryptoEnv.html" class="btn btn-neutral float-left" title="CryptoEnv" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="Recorder.html" class="btn btn-neutral float-right" title="Recorder" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Crinstaniev.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

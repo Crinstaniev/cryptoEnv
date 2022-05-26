@@ -1,0 +1,163 @@
+DataLoader
+**********
+
+class crypto_env.dataloader.DataLoader(start_idx, end_idx)
+
+   Bases: "abc.ABC"
+
+   The DataLoader module is for user to map arbitrary data source to
+   form that the environment can recognize.
+
+   abstract __init__(start_idx, end_idx)
+
+      Parameters:
+         * **start_idx** (*int*) – Start index
+
+         * **end_idx** (*int*) – End index
+
+   __iter__()
+
+      This object is iterable. See
+      https://www.w3schools.com/python/python_iterators.asp for more
+      details.
+
+   abstract __len__()
+
+      Return the length of the iterable
+
+      Raises:
+         **NotImplementedError** –
+
+   abstract __next__()
+
+      See https://www.w3schools.com/python/python_iterators.asp for
+      more details
+
+   abstract get_duration()
+
+      Get length of the data source.
+
+      Raises:
+         **NotImplementedError** –
+
+   abstract get_feature(feature_name)
+
+      Get input variables (features)
+
+      Parameters:
+         **feature_name** (*str*) – name of the feature
+
+      Raises:
+         **NotImplementedError** –
+
+   get_idx()
+
+      Get current index
+
+      Raises:
+         **NotImplementedError** –
+
+   get_transaction_fee(idx=None)
+
+      Return the transaction fee list
+
+      Parameters:
+         **idx** (*int**, **optional*) – Number of transaction fee to
+         return. Defaults to None.
+
+      Returns:
+         list
+
+   get_transaction_fee_type()
+
+      Return the name of transaction fee type
+
+      Returns:
+         str
+
+   property idx
+
+   load_transaction_fee(values, fee_type='percentage')
+
+      Load the transaction fee list
+
+      Parameters:
+         * **values** (*list*) – Transaction fee list
+
+         * **fee_type** (*str**, **optional*) – ‘percentage’ or ‘fix’.
+           Defaults to ‘percentage’.
+
+   abstract reset()
+
+      Reset the dataloader
+
+      Raises:
+         **NotImplementedError** –
+
+class crypto_env.dataloader.ETHLoader(base_dir, start_idx, end_idx, features: list, dropna=False, download=True, url='https://raw.githubusercontent.com/coinmetrics/data/master/csv/eth.csv')
+
+   Bases: "crypto_env.dataloader.dataloader.DataLoader"
+
+   Our example implementation of "DataLoader" class. We use the
+   Ethereum history data from the coinmetrics repo. See
+   https://raw.githubusercontent.com/coinmetrics/data for more
+   details.
+
+   __init__(base_dir, start_idx, end_idx, features: list, dropna=False, download=True, url='https://raw.githubusercontent.com/coinmetrics/data/master/csv/eth.csv')
+
+      Parameters:
+         * **base_dir** (*str*) – Directory to save the download data
+
+         * **start_idx** (*int*) – Where to start in the data source
+
+         * **end_idx** (*int*) – Where to end in the data source
+
+         * **features** (*list*) – Input variables for the environment
+
+         * **dropna** (*bool**, **optional*) – Whether to drop lines
+           including empty values. Defaults to False.
+
+         * **download** (*bool**, **optional*) – Whether to re-
+           download the data. Defaults to True.
+
+         * **url** (*str**, **optional*) – Link to the data source.
+           Defaults to “https://raw.githubusercontent.com/coinmetrics
+           /data/master/csv/eth.csv”.
+
+   __len__()
+
+      Number of items
+
+      Returns:
+         int
+
+   get_duration()
+
+      Get length of the data source.
+
+      Raises:
+         **NotImplementedError** –
+
+   get_feature(feature_name)
+
+      Get input variables (features)
+
+      Parameters:
+         **feature_name** (*str*) – name of the feature
+
+      Raises:
+         **NotImplementedError** –
+
+   get_idx()
+
+      Get current index
+
+      Raises:
+         **NotImplementedError** –
+
+   reset()
+
+      Reset the dataloader
+
+      Raises:
+         **NotImplementedError** –
