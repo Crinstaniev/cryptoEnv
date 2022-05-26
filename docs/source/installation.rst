@@ -11,7 +11,7 @@ You can directly download the project from our GitHub repository:
     git clone https://github.com/crinstaniev/cryptoenv.git
 
 Install Using `pip`
-===================
+-------------------
 
 Or you can use `pip` to install 
 
